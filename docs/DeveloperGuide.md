@@ -317,11 +317,28 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+1.  The system should work on any _mainstream OS_ as long as it has Java `17` or above installed.
+2.  The system should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-*{More to be added}*
+4.  The system should respond within 2 seconds.
+5.  The system should only be for a single user.
+6.  The system's data should be stored locally.
+7.  The system should work without requiring an installer.
+8.  The system should not require a remote server.
+9.  The system's GUI should work well for standard screen resolutions 1920x1080 and higher.
+10. The system should be easy to use for a user who has no experience using an address book software.
+11. The system should not interfere with other software.
+12. The system should save data automatically after each modification in the address book.
+13. The system's saved data should still be accessible even if it crashes.
+14. The system should not require a database management system for storing data.
+15. The system should be able to handle invalid commands without crashing.
+16. The system's features should be easy to test.
+17. The system's commands should not cause confusion (i.e. not ambiguous).
+18. The system should be at most 100MB in size.
+19. The system should only require one JAR file.
+20. A user who has not used the software for a while should be able to use it efficiently immediately after returning to it.
+21. The User Guide and Developer Guide should be PDF-friendly.
+22. The system should be able to read a save file provided it is in the correct path and has the correct name.
 
 ### Glossary
 
