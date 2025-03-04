@@ -290,30 +290,139 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+#### Use case: Create a student
 
-**MSS**
+**Main Success Scenario (MSS)**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
-
-    Use case ends.
+1. User sends request to System to create student
+2. System creates a new user
+3. Use case ends
 
 **Extensions**
 
-* 2a. The list is empty.
+- If input is erroneous
+  - System displays an error message
+  - Use case resumes at step 1
 
-  Use case ends.
+#### Use case: Delete a student
 
-* 3a. The given index is invalid.
+**MSS**
 
-    * 3a1. AddressBook shows an error message.
+1. User requests to list persons
+2. System shows a list of persons
+3. User requests to delete a specific person in the list
+4. System deletes the person
+5. Use case ends.
 
-      Use case resumes at step 2.
+**Extensions**
 
-*{More to be added}*
+- The given index is invalid.
+  - System shows an error message.
+  - Use case resumes at step 1.
+
+#### Use case: List students
+
+**MSS**
+
+1. User requests to list students
+2. System lists all students
+3. Use case ends
+
+**Extensions**
+
+- If there are no students
+  - System doesn't display anything
+  - Use case ends
+
+#### Use case: List tutorial slots
+
+**MSS**
+
+1. User requests to list tutorial slots
+2. System lists all tutorial slots
+3. Use case ends
+
+**Extensions**
+
+- If there are no tutorial slots
+  - System doesn't display anything
+  - Use case ends
+
+#### Use case: Create a tutorial slot
+
+**MSS**
+
+1. User requests to create tutorial slot
+2. System creates a new tutorial slot
+3. Use case ends
+
+**Extensions**
+
+- If tutorial slot already exists
+  - System shows an error message
+  - Use case continues at step 1
+- If tutorial slot name is invalid
+  - System shows an error message
+  - Use case continues at step 1
+
+#### Use case: Delete a tutorial slot
+
+**MSS**
+
+1. User requests to delete tutorial slot
+2. System deletes specified tutorial slot
+3. Use case ends
+
+**Extensions**
+
+- If specified tutorial slot doesn't exist
+  - System shows an error message
+  - Use case ends
+- If tutorial slot name is invalid
+  - System shows an error message
+  - Use case continues at step 1
+
+#### Use case: Add student to tutorial slot
+
+**MSS**
+
+1. User lists all students
+2. System lists all students
+3. User sends the command to add students to tutorial slots
+4. System adds the students to the respective tutorial slots
+5. Use case ends
+
+**Extensions**
+
+- If user doesn't list students first,
+  - System shows error message
+  - Use case continues at step 1
+- If user inputs invalid information
+  - System shows error message
+  - Use case continues at step 1
+
+
+#### Use case: Delete student from tutorial slot
+
+**MSS**
+
+1. User lists all students
+2. System lists all students
+3. User sends the command to delete students to tutorial slots
+4. System deletes the students to the respective tutorial slots
+5. Use case ends
+
+**Extensions**
+
+- If user doesn't exist
+  - System shows error message
+  - Use case ends
+- If user doesn't list students first,
+  - System shows error message
+  - Use case continues at step 1
+- If user inputs invalid information
+  - System shows error message
+  - Use case continues at step 1
 
 ### Non-Functional Requirements
 
