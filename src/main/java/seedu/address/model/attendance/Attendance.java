@@ -3,6 +3,8 @@ package seedu.address.model.attendance;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import seedu.address.model.student.Student;
 import seedu.address.model.tutorial.Tutorial;
@@ -20,6 +22,14 @@ public record Attendance(Tutorial tutorial, Student student,
 
     public Attendance(Tutorial tutorial, Student student) {
         this(tutorial, student, new ArrayList<>(Collections.nCopies(NUMBER_OF_WEEKS, ABSENT)));
+    }
+
+    public Attendance {
+        attendances = fixAttendances(attendances);
+    }
+
+    private static List<Integer> fixAttendances(List<Integer> attendances) {
+        return Stream.concat(attendances.stream(), Stream.generate(() -> 0)).limit(NUMBER_OF_WEEKS).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public Attendance(Attendance other) {
