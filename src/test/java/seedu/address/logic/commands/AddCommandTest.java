@@ -208,7 +208,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void setSubmissionStatus(String tutorialName, String assignmentName, Student student,
+        public void setSubmissionStatus(String tutorialName, String assignmentName, String studentName,
                         SubmissionStatus status) {
             throw new AssertionError("This method should not be called.");
         }

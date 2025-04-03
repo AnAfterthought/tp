@@ -41,7 +41,7 @@ public class UnmarkAttendanceCommandParser implements Parser<UnmarkAttendanceCom
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_WEEK);
 
-        int week = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_WEEK).get()).getOneBased();
+        int week = ParserUtil.parseWeek(argMultimap.getValue(PREFIX_WEEK).get()).getOneBased();
 
         if (week < UnmarkAttendanceCommand.START_WEEK || week > UnmarkAttendanceCommand.END_WEEK) {
             throw new ParseException(String.format(UnmarkAttendanceCommand.MESSAGE_INVALID_WEEK));

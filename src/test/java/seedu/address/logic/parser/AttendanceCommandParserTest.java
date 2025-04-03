@@ -175,26 +175,40 @@ public class AttendanceCommandParserTest {
         parseCommand_attendanceCommand_invalidNoIndex(unmarkAttendanceParser);
     }
 
-    private void parseCommand_attendanceCommand_invalidIndices(Parser<? extends Command> parser) {
-        String invalidCmdOne = "w/a i/%d".formatted(DUMMY_INDEX_ONE);
-        String invalidCmdTwo = "w/%d i/a".formatted(START_WEEK);
-        String invalidCmdThree = "w/%d i/%d".formatted(-START_WEEK, DUMMY_INDEX_ONE);
-        String invalidCmdFour = "w/%d i/%d".formatted(START_WEEK, -DUMMY_INDEX_ONE);
+    private void parseCommand_attendanceCommand_invalidIndex(Parser<? extends Command> parser) {
+        String invalidCmdOne = "w/%d i/a".formatted(START_WEEK);
+        String invalidCmdTwo = "w/%d i/%d".formatted(START_WEEK, -DUMMY_INDEX_ONE);
 
         assertParseFailure(parser, invalidCmdOne, ParserUtil.MESSAGE_INVALID_INDEX);
         assertParseFailure(parser, invalidCmdTwo, ParserUtil.MESSAGE_INVALID_INDEX);
-        assertParseFailure(parser, invalidCmdThree, ParserUtil.MESSAGE_INVALID_INDEX);
-        assertParseFailure(parser, invalidCmdFour, ParserUtil.MESSAGE_INVALID_INDEX);
     }
 
     @Test
-    public void parseCommand_markAttendanceCommand_invalidIndices() {
-        parseCommand_attendanceCommand_invalidIndices(markAttendanceParser);
+    public void parseCommand_markAttendanceCommand_invalidIndex() {
+        parseCommand_attendanceCommand_invalidIndex(markAttendanceParser);
     }
 
     @Test
-    public void parseCommand_unmarkAttendanceCommand_invalidIndices() {
-        parseCommand_attendanceCommand_invalidIndices(unmarkAttendanceParser);
+    public void parseCommand_unmarkAttendanceCommand_invalidIndex() {
+        parseCommand_attendanceCommand_invalidIndex(unmarkAttendanceParser);
+    }
+
+    private void parseCommand_attendanceCommand_invalidWeekIndex(Parser<? extends Command> parser) {
+        String invalidCmdOne = "w/a i/%d".formatted(DUMMY_INDEX_ONE);
+        String invalidCmdTwo = "w/%d i/%d".formatted(-START_WEEK, DUMMY_INDEX_ONE);
+
+        assertParseFailure(parser, invalidCmdOne, ParserUtil.MESSAGE_INVALID_WEEK);
+        assertParseFailure(parser, invalidCmdTwo, ParserUtil.MESSAGE_INVALID_WEEK);
+    }
+
+    @Test
+    public void parseCommand_markAttendanceCommand_invalidWeekIndex() {
+        parseCommand_attendanceCommand_invalidWeekIndex(markAttendanceParser);
+    }
+
+    @Test
+    public void parseCommand_unmarkAttendanceCommand_invalidWeekIndex() {
+        parseCommand_attendanceCommand_invalidWeekIndex(unmarkAttendanceParser);
     }
 
     private void parseCommand_attendanceCommand_invalidWithPreamble(Parser<? extends Command> parser) {

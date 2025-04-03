@@ -21,6 +21,7 @@ import java.util.Optional;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import seedu.address.commons.util.JsonUtil;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.student.Student;
 import seedu.address.model.submission.Submission;
@@ -97,7 +98,7 @@ public class TypicalAddressBook {
 
         try {
             ab.setSubmissionStatus(new Submission(T1_ASSIGN1, ALICE, SubmissionStatus.SUBMITTED));
-        } catch (ItemNotFoundException e) {
+        } catch (ItemNotFoundException | CommandException e) {
             throw new RuntimeException(e);
         }
 

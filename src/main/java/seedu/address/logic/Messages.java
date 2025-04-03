@@ -23,7 +23,7 @@ public class Messages {
     public static final String MESSAGE_UNKNOWN_ERROR = "Something went wrong";
 
     public static final String MESSAGE_TUTORIAL_NOT_FOUND = "Tutorial '%s' is not found";
-    public static final String MESSAGE_ASSIGNMENT_NOT_FOUND = "Assignment '%s' is not found";
+    public static final String MESSAGE_ASSIGNMENT_NOT_FOUND = "Assignment '%s' is not found in Tutorial '%s'";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student '%s' is not found";
 
     /**

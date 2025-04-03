@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 import seedu.address.commons.exceptions.DataLoadingException;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.student.Student;
@@ -120,6 +121,8 @@ public class JsonSerializableAddressBook {
             } catch (IllegalValueException e) {
                 LOGGER.warning("Failed to load submission: %s".formatted(e.getMessage()));
             } catch (ItemNotFoundException e) {
+                LOGGER.warning("Failed to add submission %s: %s".formatted(submissionJson, e.getMessage()));
+            } catch (CommandException e) {
                 LOGGER.warning("Failed to add submission %s: %s".formatted(submissionJson, e.getMessage()));
             }
         }

@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.submission.Submission;
@@ -278,7 +279,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         submissionsToAdd.stream().forEach(submission -> {
             try {
                 setSubmissionStatus(submission);
-            } catch (ItemNotFoundException e) {
+            } catch (ItemNotFoundException | CommandException e) {
                 // Tutorial, assignment, and student should exist
                 throw new IllegalStateException(e);
             }
@@ -340,7 +341,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         for (var s : newSubmissions) {
             try {
                 setSubmissionStatus(s);
-            } catch (ItemNotFoundException e) {
+            } catch (ItemNotFoundException | CommandException e) {
                 throw new IllegalStateException(MESSAGE_UNKNOWN_ERROR);
             }
         }
@@ -359,7 +360,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(assignment.tutorial())));
 
         if (tut.assignments().find(assignment).isEmpty()) {
-            throw new ItemNotFoundException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(assignment));
+            throw new ItemNotFoundException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(assignment, tut));
         }
 
         tut.deleteAssignment(assignment);
@@ -373,12 +374,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    public void setSubmissionStatus(String tutorialName, String assignmentName, Student student,
-                    SubmissionStatus status) throws ItemNotFoundException {
+    public void setSubmissionStatus(String tutorialName, String assignmentName, String studentName,
+                    SubmissionStatus status) throws ItemNotFoundException, CommandException {
         var tut = tutorials.find(new Tutorial(tutorialName)).orElseThrow((
-        ) -> new IllegalArgumentException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorialName)));
+        ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorialName)));
         var assign = tut.findAssignment(new Assignment(assignmentName, tut)).orElseThrow((
-        ) -> new IllegalArgumentException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(assignmentName)));
+        ) -> new ItemNotFoundException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(assignmentName, tut)));
+
+        var student = students.stream().filter(s -> s.getName().toString().equals(studentName)).findAny().orElseThrow((
+        ) -> new ItemNotFoundException(MESSAGE_STUDENT_NOT_FOUND.formatted(studentName)));
 
         setSubmissionStatus(new Submission(assign, student, status));
     }
@@ -388,16 +392,20 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * Note: Assignment also requires tutorial information
      */
-    public void setSubmissionStatus(Submission submission) throws ItemNotFoundException {
+    public void setSubmissionStatus(Submission submission) throws ItemNotFoundException, CommandException {
         // Resolve assignment
         var tut = tutorials.find(submission.assignment().tutorial()).orElseThrow((
         ) -> new ItemNotFoundException(MESSAGE_TUTORIAL_NOT_FOUND.formatted(submission.assignment().tutorial())));
         var assignment = tut.findAssignment(submission.assignment()).orElseThrow((
-        ) -> new ItemNotFoundException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(submission.assignment())));
+        ) -> new ItemNotFoundException(MESSAGE_ASSIGNMENT_NOT_FOUND.formatted(submission.assignment(), tut)));
 
         // Resolve student
         var studentInList = students.find(submission.student()).orElseThrow((
         ) -> new ItemNotFoundException(MESSAGE_STUDENT_NOT_FOUND.formatted(submission.student())));
+
+        if (!studentInList.getTutorials().contains(tut)) {
+            throw new CommandException("'%s' not in '%s'".formatted(studentInList.getName(), tut));
+        }
 
         // Add to submissions list
         var newSubmission = new Submission(submission).setAssignment(assignment).setStudent(studentInList);
@@ -533,7 +541,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             submissions.stream().forEach(s -> {
                 try {
                     setSubmissionStatus(s);
-                } catch (ItemNotFoundException e) {
+                } catch (ItemNotFoundException | CommandException e) {
                     throw new IllegalStateException(e);
                 }
             });

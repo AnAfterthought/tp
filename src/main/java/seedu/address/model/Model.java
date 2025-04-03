@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.submission.Submission;
@@ -144,8 +145,8 @@ public interface Model {
     /**
      * Sets submission status
      */
-    void setSubmissionStatus(String tutorialName, String assignmentName, Student student, SubmissionStatus status)
-                    throws ItemNotFoundException;
+    void setSubmissionStatus(String tutorialName, String assignmentName, String studentName, SubmissionStatus status)
+                    throws ItemNotFoundException, CommandException;
 
     /**
      * Adds an assignment to tutorial slot
