@@ -28,6 +28,11 @@ public class DeleteTutorialCommandParser implements Parser<DeleteTutorialCommand
             throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT.formatted(DeleteTutorialCommand.MESSAGE_USAGE));
         }
 
+        if (tutorialName.contains(" ")) {
+            throw new ParseException(
+                            MESSAGE_INVALID_COMMAND_FORMAT.formatted(DeleteTutorialCommand.MESSAGE_MULTIPLE_NAMES));
+        }
+
         if (!Tutorial.isValidName(tutorialName)) {
             throw new ParseException(
                             MESSAGE_INVALID_COMMAND_FORMAT.formatted(DeleteTutorialCommand.MESSAGE_INVALID_NAME));

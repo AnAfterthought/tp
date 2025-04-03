@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox fx:id="cardPane" styleClass="attendance-card" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+    <GridPane HBox.hgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+        </columnConstraints>
+        <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0" styleClass="attendance-content">
+            <padding>
+                <Insets top="8" right="8" bottom="8" left="15" />
+            </padding>
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label fx:id="id" styleClass="attendance-id">
+                    <minWidth>
+                        <Region fx:constant="USE_PREF_SIZE" />
+                    </minWidth>
+                </Label>
+                <Label fx:id="studentName" text="\$first" styleClass="student-name" />
+            </HBox>
+            <VBox alignment="CENTER_LEFT" spacing="5">
+                <HBox alignment="CENTER_LEFT" spacing="5">
+                    <Label text="Tutorial:" styleClass="tutorial-prefix"/>
+                    <Label fx:id="tutorialName" styleClass="tutorial-name"/>
+                </HBox>
+                <FlowPane fx:id="attendances" styleClass="attendance-markers"/>
+            </VBox>
+        </VBox>
+    </GridPane>
+</HBox>

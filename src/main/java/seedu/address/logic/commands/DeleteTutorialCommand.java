@@ -20,6 +20,7 @@ public class DeleteTutorialCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Successfully deleted %1$s";
     public static final String MESSAGE_INVALID_NAME = """
                     The only valid characters are: letters (A-Z, a-z), digits (0-9), underscores (_), hyphens (-)""";
+    public static final String MESSAGE_MULTIPLE_NAMES = "Only 1 tutorial can be deleted at a time";
     public static final String MESSAGE_TUTORIAL_DOES_NOT_EXIST = "%1$s doesn't exist";
 
     private final Tutorial toDelete;

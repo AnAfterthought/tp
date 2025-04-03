@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+  <GridPane HBox.hgrow="ALWAYS">
+    <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+    </columnConstraints>
+    <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
+      <padding>
+        <Insets top="5" right="5" bottom="5" left="15" />
+      </padding>
+
+      <HBox fx:id="studentCard" spacing="10" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+
+        <!-- Index Section -->
+        <VBox spacing="10" alignment="CENTER">
+          <Label fx:id="id">
+            <minWidth>
+              <Region fx:constant="USE_PREF_SIZE" />
+            </minWidth>
+          </Label>
+          <Region prefHeight="25" />
+        </VBox>
+
+        <!-- Main Content Section -->
+        <VBox spacing="10" HBox.hgrow="ALWAYS">
+          <HBox spacing="10" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+            <!-- Name -->
+            <VBox alignment="CENTER_LEFT" spacing="10" HBox.hgrow="ALWAYS">
+                <Label fx:id="name" text="John Doe" />
+            </VBox>
+
+            <!-- StudentId and Email -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+              <Label fx:id="studentId" text="Student ID" />
+              <Label fx:id="email" text="john.doe@example.com" />
+            </VBox>
+
+            <!-- Phone and Telegram -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+              <HBox spacing="5">
+                <Label text="📞"/>
+                <Label fx:id="phone" text="123-456-7890" />
+              </HBox>
+              <HBox spacing="5">
+                <Label text="📱"/>
+                <Label fx:id="handle" text="@1231" />
+              </HBox>
+            </VBox>
+          </HBox>
+          <Region style="-fx-background-color: black; -fx-min-height: 1px; -fx-max-height: 1px;" />
+
+          <FlowPane fx:id="tutorials" minHeight="13" />
+        </VBox>
+      </HBox>
+    </VBox>
+  </GridPane>
+</HBox>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+    <HBox fx:id="cardPane" styleClass="submission-student-card">
+        <VBox styleClass="submission-student-content">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label fx:id="id" styleClass="submission-id">
+                    <minWidth>
+                        <Region fx:constant="USE_PREF_SIZE" />
+                    </minWidth>
+                </Label>
+                <Label fx:id="studentName" styleClass="submission-student-name"/>
+                <Label fx:id="studentId" styleClass="submission-student-id"/>
+            </HBox>
+            <VBox fx:id="submissionTutorialsContainer" styleClass="submission-tutorials-container"/>
+        </VBox>
+    </HBox>
+</VBox>

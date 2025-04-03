@@ -19,7 +19,7 @@ import seedu.address.model.submission.SubmissionStatus;
  */
 public class SetSubmissionCommandParser implements Parser<SetSubmissionCommand> {
 
-    public static final String MESSAGE_USAGE = "Usage: %s %s STATE %sTUTORIAL_NAME %sASSIGNMENT_NAME %sINDEX..."
+    public static final String MESSAGE_USAGE = "Usage: %s %s STATE %sTUTORIAL_NAME %sASSIGNMENT_NAME %sSTUDENT_ID..."
                     .formatted(SubmissionParser.COMMAND_WORD, SetSubmissionCommand.COMMAND_WORD, PREFIX_TUTORIAL_NAME,
                                     PREFIX_ASSIGNMENT, PREFIX_INDEX);
 
@@ -56,7 +56,7 @@ public class SetSubmissionCommandParser implements Parser<SetSubmissionCommand> 
 
         var studentIdxList = argMultimap.getAllValues(PREFIX_INDEX).stream().flatMap(idx -> {
             try {
-                return Stream.of(ParserUtil.parseIndex(idx));
+                return Stream.of(ParserUtil.parseStudentId(idx));
             } catch (ParseException e) {
                 return Stream.empty();
             }

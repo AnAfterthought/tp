@@ -1,0 +1,91 @@
+.submission-student-card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 8px;
+    -fx-border-color: #E8D5D5;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 8px;
+    -fx-padding: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(209, 171, 173, 0.15), 6, 0, 0, 1);
+    -fx-spacing: 8px;
+}
+
+.submission-student-card:hover {
+    -fx-background-color: #FDFAFA;
+    -fx-border-color: #D1ABAD;
+}
+
+.submission-student-content {
+    -fx-spacing: 8px;
+}
+
+.submission-student-name {
+    -fx-font-family: "Livvic", sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #3D2B3D;
+    -fx-padding: 5px 0 5px 0;
+}
+
+.submission-student-id {
+    -fx-font-family: "Livvic", sans-serif;
+    -fx-font-size: 10px;
+    -fx-text-fill: gray;
+    -fx-padding: 5px 0 5px 0;
+    -fx-border-color: #F0E6E6;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.submission-tutorials-container {
+    -fx-spacing: 12px;
+    -fx-padding: 5px 0 0 10px;
+}
+
+.tutorial-section {
+    -fx-spacing: 5px;
+    -fx-padding: 0 0 0 15px;
+}
+
+.tutorial-header {
+    -fx-font-family: "Livvic", sans-serif;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5D3A4A;
+    -fx-padding: 3px 0 3px 8px;
+    -fx-border-color: #F0E6E6;
+    -fx-border-width: 0 0 0 3px;
+}
+
+.submissions-container {
+    -fx-hgap: 7px;
+    -fx-vgap: 5px;
+    -fx-padding: 8px 0 0 15px;
+}
+
+.submission-status {
+    -fx-font-family: "Livvic", sans-serif;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 3px 8px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-alignment: center;
+    -fx-min-width: 80px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 1, 0, 0, 1);
+}
+
+.submission-status.submitted {
+    -fx-background-color: #F0F3F5;
+    -fx-text-fill: #4A4A4A;
+    -fx-border-color: #D1D1D1;
+    -fx-border-width: 1px;
+}
+
+.submission-status.not-submitted {
+    -fx-background-color: linear-gradient(to bottom, #BA3F38, #9E342D);
+    -fx-text-fill: white;
+}
+
+.submission-status.graded {
+    -fx-background-color: linear-gradient(to bottom, #00A651, #008744);
+    -fx-text-fill: white;
+}

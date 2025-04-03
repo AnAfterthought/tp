@@ -1,0 +1,147 @@
+.background {
+    -fx-background-color: #F0F3F5;
+    background-color: #F0F3F5; /* Used in the default.html file */
+}
+
+.pane-with-border {
+     -fx-background-color: #F0F3F5;
+     -fx-border-color: #F0F3F5;
+     -fx-border-top-width: 1px;
+}
+
+.context-menu {
+    -fx-background-color: #F0F3F5;
+}
+
+.context-menu .label {
+    -fx-text-fill: black;
+}
+
+.menu-bar {
+    -fx-background-color: #F0F3F5;
+}
+
+.menu-bar .label {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Livvic";
+    -fx-text-fill: black;
+    -fx-opacity: 0.9;
+}
+
+.menu .left-container {
+    -fx-background-color: black;
+}
+
+.menu:hover {
+    -fx-background-color: #97C5C4;
+}
+
+.menu-bar > .container > .menu-button:hover,
+.menu-bar > .container > .menu-button:focused,
+.menu-bar > .container > .menu-button:showing {
+    -fx-background-color: #97C5C4;
+}
+
+.menu-item:hover,
+.menu-item:focused {
+    -fx-background-color: #97C5C4;
+}
+
+.menu-item:hover .label,
+.menu-item:focused .label {
+    -fx-text-fill: white;
+}
+
+/*
+ * Metro style Push Button
+ * Author: Pedro Duque Vieira
+ * http://pixelduke.wordpress.com/2012/10/23/jmetro-windows-8-controls-on-java/
+ */
+.button {
+    -fx-padding: 5 22 5 22;
+    -fx-border-color: #e2e2e2;
+    -fx-border-width: 2;
+    -fx-border-radius: 2;
+    -fx-background-radius: 0;
+    -fx-background-color: #F0F3F5;
+    -fx-font-family: "Livvic";
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.button:hover {
+    -fx-background-color: #3a3a3a;
+}
+
+.button:pressed, .button:default:hover:pressed {
+  -fx-background-color: white;
+  -fx-text-fill: #F0F3F5;
+}
+
+.button:focused {
+    -fx-border-color: white, white;
+    -fx-border-width: 1, 1;
+    -fx-border-style: solid, segments(1, 1);
+    -fx-border-radius: 0, 0;
+    -fx-border-insets: 1 1 1 1, 0;
+}
+
+.button:disabled, .button:default:disabled {
+    -fx-opacity: 0.4;
+    -fx-background-color: #F0F3F5;
+    -fx-text-fill: white;
+}
+
+.button:default {
+    -fx-background-color: -fx-focus-color;
+    -fx-text-fill: #ffffff;
+}
+
+.button:default:hover {
+    -fx-background-color: derive(-fx-focus-color, 30%);
+}
+
+
+.scroll-bar {
+    -fx-background-color: #F0F3F5;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: derive(#1d1d1d, 50%);
+    -fx-background-insets: 3;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 1 8 1 8;
+}
+
+.scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
+    -fx-padding: 8 1 8 1;
+}
+
+
+
+
+
+
+
+.cell_small_label {
+    -fx-font-family: "Livvic", sans-serif;
+    -fx-font-size: 13px;
+    -fx-text-fill: black;
+}
+
+#mainSplitPane {
+    -fx-box-border: transparent;
+    -fx-background-color: transparent;
+}

@@ -4,12 +4,14 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.NavigationMode;
+import seedu.address.model.student.Student;
+import seedu.address.model.student.StudentID;
 import seedu.address.model.submission.SubmissionStatus;
 import seedu.address.model.uniquelist.exceptions.ItemNotFoundException;
 
@@ -25,21 +27,21 @@ public class SetSubmissionCommand extends Command {
 
     private final String tutorialName;
     private final String assignmentName;
-    private final List<Index> studentIdxList;
+    private final List<StudentID> studentIdList;
     private final SubmissionStatus status;
 
     /**
      * Creates a {@link SetSubmissionCommand} object
      */
-    public SetSubmissionCommand(String tutorialName, String assignmentName, List<Index> studentIdxList,
+    public SetSubmissionCommand(String tutorialName, String assignmentName, List<StudentID> studentIdList,
                     SubmissionStatus status) {
         Objects.requireNonNull(tutorialName);
         Objects.requireNonNull(assignmentName);
-        Objects.requireNonNull(studentIdxList);
+        Objects.requireNonNull(studentIdList);
 
         this.tutorialName = tutorialName;
         this.assignmentName = assignmentName;
-        this.studentIdxList = studentIdxList;
+        this.studentIdList = studentIdList;
         this.status = status;
     }
 
@@ -48,19 +50,17 @@ public class SetSubmissionCommand extends Command {
         requireNonNull(model);
 
         var errMsg = new StringBuilder();
-        for (var idx : studentIdxList) {
-            var idxZeroBased = idx.getZeroBased();
 
-            var students = model.getFilteredStudentList();
-            if (idxZeroBased >= students.size()) {
-                errMsg.append("Student at index %d is out of bounds\n".formatted(idx.getOneBased()));
+        for (var studentId : studentIdList) {
+            Optional<Student> studentOptional = model.getFilteredStudentList().stream()
+                            .filter(s -> s.getStudentId().equals(studentId)).findFirst();
+
+            if (studentOptional.isEmpty()) {
+                errMsg.append(String.format(MESSAGE_STUDENT_NOT_FOUND, studentId)).append("\n");
                 continue;
             }
 
-            var student = model.getFilteredStudentList().get(idxZeroBased);
-            if (student == null) {
-                throw new CommandException(MESSAGE_STUDENT_NOT_FOUND);
-            }
+            Student student = studentOptional.get();
 
             try {
                 model.setSubmissionStatus(tutorialName, assignmentName, student, status);
@@ -89,13 +89,13 @@ public class SetSubmissionCommand extends Command {
 
         return tutorialName.equals(otherAddCommand.tutorialName)
                         && assignmentName.equals(otherAddCommand.assignmentName)
-                        && studentIdxList.equals(otherAddCommand.studentIdxList) && status == otherAddCommand.status;
+                        && studentIdList.equals(otherAddCommand.studentIdList) && status == otherAddCommand.status;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this).add("tutorialName", tutorialName).add("assignmentName", assignmentName)
-                        .add("studentIdxList", studentIdxList).add("status", status).toString();
+                        .add("studentIdList", studentIdList).add("status", status).toString();
 
     }
 }

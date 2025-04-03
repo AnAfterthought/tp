@@ -1,0 +1,86 @@
+/* HelpWindow */
+
+#copyButton, #helpMessage {
+    -fx-text-fill: black;
+}
+
+#copyButton {
+    -fx-background-color: #F0F3F5;
+}
+
+#copyButton:hover {
+    -fx-background-color: gray;
+}
+
+#copyButton:armed {
+    -fx-background-color: darkgray;
+}
+
+#helpMessageContainer {
+    -fx-background-color: #F0F3F5;
+}
+
+/* CommandBox */
+
+#commandTypeLabel {
+    -fx-font-size: 11px;
+    -fx-text-fill: #F70D1A;
+}
+
+#commandTextField {
+    -fx-background-color: #FBEEEE;
+    -fx-background-radius: 10;
+    -fx-border-color: #BFA4A4;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+    -fx-font-family: "Livvic", sans-serif;
+    -fx-font-size: 12pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8B6464;
+    -fx-padding: 8px;
+}
+
+/* ResultDisplay */
+
+.result-display {
+    -fx-background-color: transparent;
+    -fx-font-family: "Livvic";
+    -fx-font-size: 10pt;
+    -fx-text-fill: #8B6464;
+}
+
+.result-display .label {
+    -fx-text-fill: black !important;
+}
+
+#resultDisplay .content {
+    -fx-background-color: transparent, #ECE7E7, transparent, #ECE7E7;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #BFA4A4;
+    -fx-border-width: 1px;
+}
+
+/* StatusBarFooter */
+
+.status-bar {
+    -fx-background-color: #F0F3F5;
+}
+
+.status-bar .label {
+    -fx-font-family: "Livvic";
+    -fx-text-fill: black;
+    -fx-padding: 4px;
+    -fx-pref-height: 30px;
+}
+
+.status-bar-with-border {
+    -fx-background-color: #F0F3F5;
+    -fx-border-color: #F0F3F5;
+    -fx-border-width: 1px;
+}
+
+.status-bar-with-border .label {
+    -fx-text-fill: black;
+}
+

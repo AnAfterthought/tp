@@ -11,16 +11,27 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-         title="TAskbook" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
+<fx:root type="javafx.stage.Stage"
+         xmlns="http://javafx.com/javafx/17"
+         xmlns:fx="http://javafx.com/fxml/1"
+         title="TAskbook"
+         minWidth="450"
+         minHeight="600"
+         onCloseRequest="#handleExit">
+
   <icons>
-    <Image url="@/images/address_book_32.png" />
+    <Image url="@/images/taskbook_logo.png" />
   </icons>
+
   <scene>
     <Scene>
       <stylesheets>
-        <URL value="@DarkTheme.css" />
-        <URL value="@Extensions.css" />
+        <URL value="@MainTheme.css" />
+        <URL value="@MiscComponents/MiscComponents.css" />
+        <URL value="@StudentComponents/StudentComponents.css" />
+        <URL value="@TutorialComponents/TutorialComponents.css" />
+        <URL value="@AttendanceComponents/AttendanceComponents.css" />
+        <URL value="@SubmissionComponents/SubmissionComponents.css" />
       </stylesheets>
 
       <VBox>
@@ -39,53 +50,57 @@
           </padding>
         </StackPane>
 
-        <StackPane VBox.vgrow="ALWAYS" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                   minHeight="100" prefHeight="120" maxHeight="150">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </StackPane>
+        <SplitPane fx:id="mainSplitPane" orientation="VERTICAL">
+          <VBox VBox.vgrow="ALWAYS">
+            <VBox fx:id="studentList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
+              <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+              </padding>
+              <StackPane fx:id="studentListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+            </VBox>
 
-        <VBox fx:id="studentList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
-          </padding>
-          <StackPane fx:id="studentListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-        </VBox>
+            <VBox fx:id="tutorialList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS" visible="false" managed="false">
+              <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+              </padding>
+              <StackPane fx:id="tutorialListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+            </VBox>
 
-        <VBox fx:id="tutorialList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS"
-              visible="false" managed="false">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
-          </padding>
-          <StackPane fx:id="tutorialListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-        </VBox>
+            <VBox fx:id="attendanceList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS"
+                  visible="false" managed="false">
+              <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+              </padding>
+              <StackPane fx:id="attendanceListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+            </VBox>
 
-        <VBox fx:id="attendanceList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS"
-              visible="false" managed="false">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
-          </padding>
-          <StackPane fx:id="attendanceListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-        </VBox>
+            <VBox fx:id="submissionList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS"
+                  visible="false" managed="false">
+              <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+              </padding>
+              <StackPane fx:id="submissionListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+            </VBox>
 
-        <VBox fx:id="submissionList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS"
-              visible="false" managed="false">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
-          </padding>
-          <StackPane fx:id="submissionListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-        </VBox>
+            <VBox fx:id="studentAreaPlaceholder"  styleClass="pane-with-border"
+                  minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
+              <padding>
+                <Insets top="5" right="10" bottom="5" left="10" />
+              </padding>
+            </VBox>
 
-        <VBox fx:id="studentAreaPlaceholder"  styleClass="pane-with-border"
-                   minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </VBox>
+          </VBox>
 
-        <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+          <StackPane fx:id="resultDisplayPlaceholder" styleClass="pane-with-border">
+            <padding>
+              <Insets top="5" right="10" bottom="5" left="10" />
+            </padding>
+          </StackPane>
+        </SplitPane>
+
+        <StackPane fx:id="statusbarPlaceholder" />
       </VBox>
+
     </Scene>
   </scene>
 </fx:root>
