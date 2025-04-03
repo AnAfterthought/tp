@@ -19,7 +19,7 @@ import seedu.address.storage.csv.CsvListStorage;
 public class ExportCommand extends Command {
 
     public static final String COMMAND_WORD = "export";
-    public static final String MESSAGE_SUCCESS = "Address book has been exported!";
+    public static final String MESSAGE_SUCCESS = "Students and tutorials exported successfully!";
 
     public static final String FILE_OPS_ERROR_FORMAT = "Could not export data due to the following error: %s";
 

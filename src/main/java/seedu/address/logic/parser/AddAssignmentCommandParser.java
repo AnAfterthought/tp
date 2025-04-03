@@ -34,6 +34,8 @@ public class AddAssignmentCommandParser implements Parser<AddAssignmentCommand> 
 
         var argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TUTORIAL_IDX, PREFIX_DATE);
 
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_DATE);
+
         var idxList = argMultimap.getAllValues(PREFIX_TUTORIAL_IDX).stream().flatMap(idx -> {
             try {
                 return Stream.of(ParserUtil.parseIndex(idx));

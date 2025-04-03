@@ -22,7 +22,7 @@ public class ExportTutorialsCommand extends Command {
 
     public static final String MESSAGE_USAGE = "Usage: export tutorials";
 
-    public static final String MESSAGE_SUCCESS = "Successfully exported tutorials.";
+    public static final String MESSAGE_SUCCESS = "Tutorials exported successfully!";
 
     public static final String TUTORIAL_CSV_FILE = "tutorials.csv";
 

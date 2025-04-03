@@ -28,7 +28,7 @@ public class ExportStudentsCommand extends Command {
 
     public static final String MESSAGE_USAGE = "Usage: export students [TUTORIAL_NAME]";
 
-    public static final String MESSAGE_SUCCESS = "Successfully exported students";
+    public static final String MESSAGE_SUCCESS = "Students (%s) exported successfully!";
     public static final String MESSAGE_TUTORIAL_DOES_NOT_EXIST = "%1$s doesn't exist";
 
     public static final String STUDENT_CSV_FILE = "students.csv";
@@ -64,6 +64,8 @@ public class ExportStudentsCommand extends Command {
         Path exportStudentFilePath;
         List<Student> studentList = new ArrayList<>();
 
+        String message = "";
+
         if (tutorial.isPresent()) {
             exportStudentFilePath = addressBookFilePath
                             .resolveSibling(String.format(STUDENT_BELONGING_TO_CSV_FILE, tutorial.get().name()));
@@ -72,9 +74,11 @@ public class ExportStudentsCommand extends Command {
             } else {
                 return new CommandResult(String.format(MESSAGE_TUTORIAL_DOES_NOT_EXIST, tutorial.get().name()));
             }
+            message = String.format(MESSAGE_SUCCESS, tutorial.get().name());
         } else {
             exportStudentFilePath = addressBookFilePath.resolveSibling(STUDENT_CSV_FILE);
             studentList.addAll(model.getFilteredStudentList());
+            message = String.format(MESSAGE_SUCCESS, "all tutorials");
         }
 
         CsvListStorage<Student> exportStudentStorage = new CsvListStorage<Student>(exportStudentFilePath);
@@ -88,7 +92,7 @@ public class ExportStudentsCommand extends Command {
             return new CommandResult(String.format(ExportCommand.FILE_OPS_ERROR_FORMAT, ioe.getMessage()));
         }
 
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(message);
 
     }
 

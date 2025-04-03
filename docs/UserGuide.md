@@ -216,6 +216,129 @@ Examples:
 - `list` then `tutorial delete-student cs2103-f15 s/1`:
   Deletes the 1st student in the list from the tutorial slot `cs2103-f15`.
 
+### Finding students : `find`
+
+Finds all students whose names contain any of the specified keywords (case-insensitive) or who are in the
+specified tutorial group(s), and displays them as a list with index numbers.
+
+Format: `find NAME_1 [NAME_2 NAME_3 ...] [t/TUTORIAL_NAME]`
+
+- `NAME` can have multiple, seperated by spaces
+- `TUTORIAL_NAME` has to be attached with 't/' and is optional
+
+Examples:
+- `find alice bob`:
+  Finds any student(s) named alice or bob.
+- `find t/CS2103_T02`:
+  Finds any student(s) that has a tutorial CS2103_T02.
+- `find alice bob t/CS2103_T02`:
+  Finds any student(s) named alice or bob that has a tutorial CS2103_T02.
+- `find alice bob t/CS2103_T02 t/CS2103_T03`:
+  Finds any student(s) named alice or bob that is in any of the tutorials CS2103_T02 or CS2103_T03.
+
+
+### Finding a tutorial : `tutorial find`
+
+Finds all tutorials whose names contain any of the specified keywords 
+(case-insensitive) and displays them as a list with index numbers.
+
+Format: `tutorial find TUTORIAL_NAME_1 [TUTORIAL_NAME_2 TUTORIAL_NAME_3 ...]`
+
+- `TUTORIAL_NAME` can be multiple, seperated by spaces
+
+Examples:
+- `tutorial find CS2103_T02`:
+  Finds any tutorial(s) named CS2103_T02.
+- `tutorial find CS2103_T02 CS2103_T03`:
+  Finds any tutorial(s) named CS2103_T02 or CS2103_T03.
+- `tutorial find CS2103`:
+  Finds any tutorial(s) that has CS2103 in the name.
+
+### Listing attendance: `attendance list`
+
+Shows a list of attendances in the address book. It can list all attendances, the attendance for a specific student or
+attendance for a specific tutorial.
+
+Format: `attendance list [INDEX]`
+
+- `INDEX` **must be a positive integer** 1, 2, 3, ...
+- If the command is run from the student view, `INDEX` refers to the index number shown in the student list.
+- If the command is run from the tutorial view, `INDEX` refers to the index number shown in the tutorial list.
+
+Examples:
+
+- From student view, `attendance list 1` lists the attendance of the first student on the list.
+- From tutorial view, `attendance list 1` lists the attendance of the first tutorial on the list.
+- If there are invalid arguments, i.e. `attendance list a`, the default behaviour will list all attendances in the
+  address book.
+
+### Mark attendance: `attendance mark`
+
+Marks student(s) attendance for a specified week.
+
+Format: `attendance mark w/WEEK i/INDEX...`
+
+- `WEEK` **must be a positive integer** from 3 to 13 (inclusive).
+- `INDEX` **must be a positive integer** 1, 2, 3, ...
+- `INDEX` refers to the index number shown in the displayed attendance list.
+
+Examples:
+
+- `attendance list`, then `attendance mark w/3 i/1`
+- `attendance list`, then `attendance mark w/13 i/1 i/2`
+- From student view, tutorial view or submission view,
+  `attendance mark` command will bring the user to attendance view and list all attendances.
+
+### Unmark attendance: `attendance unmark`
+
+Unmarks student(s) attendance for a specified week.
+
+Format: `attendance unmark w/WEEK i/INDEX...`
+
+- `WEEK` **must be a positive integer** from 3 to 13 (inclusive).
+- `INDEX` **must be a positive integer** 1, 2, 3, ...
+- `INDEX` refers to the index number shown in the displayed attendance list.
+
+Examples:
+
+- `attendance list`, then `attendance unmark w/3 i/1`
+- `attendance list`, then `attendance unmark w/13 i/1 i/2`
+- From student view, tutorial view or submission view,
+  `attendance unmark` command will bring the user to attendance view and list all attendances.
+
+### Listing submissions: `submission list`
+
+Lists all submissions.
+
+Format: `submission list [s/STUDENT_NAME_PREFIX] [t/TUTORIAL_NAME_PREFIX] [a/ASSIGNMENT_NAME_PREFIX]`
+
+- If `STUDENT_NAME_PREFIX` is specified,
+  it will list all submissions for students whose names **start with** `STUDENT_NAME_PREFIX`.
+- If `TUTORIAL_NAME_PREFIX` is specified,
+  it will list all submissions for tutorials whose names **start with** `TUTORIAL_NAME_PREFIX`.
+- If `ASSIGNMENT_NAME_PREFIX` is specified,
+  it will list all submissions for assignments whose names **start with** `ASSIGNMENT_NAME_PREFIX`.
+- Note: The filtering is performed in a **case-insensitive** manner.
+
+Examples:
+
+- `submission list`
+- `submission list t/cs2103` lists submissions of tutorial **starting with** `cs2103`
+- `submission list a/lab 1` lists submissions of assignments that **starts with** `lab 1`
+
+### Setting submission status: `submission set`
+
+Sets the submission status of a submission
+
+Format: `submission set STATE t/TUTORIAL_NAME a/ASSIGNMENT_NAME s/STUDENT_NAME...`
+
+- `STATE` must be one of the following values: `not-submitted`, `submitted`, `graded`
+
+Examples:
+
+- `submission set submitted t/CS2103-F15 a/Week 10 Tasks s/Bernice Yu`
+- `submission set submitted t/CS2103-F15 a/Week 10 Tasks s/Bernice Yu s/Alex Yeoh`
+
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.
@@ -316,6 +439,11 @@ and overwrite the empty data file it creates with the file that contains the dat
 | **Tutorial List**                 | `tutorial list`                                                                                                                                                              |
 | **Add student to tutorial**       | `tutorial add-student TUTORIAL_NAME s/STUDENT_INDEX`<br>e.g., `tutorial add-student cs2103-f15 s/1`                                                                          |
 | **Delete student from tutorial**  | `tutorial delete-student TUTORIAL_NAME s/STUDENT_INDEX`<br>e.g., `tutorial delete-student cs2103-f15 s/1`                                                                    |
+| **List attendances**              | `attendance list [INDEX]`<br>e.g., `attendance list`                                                                                                                         |
+| **Mark attendance**               | `attendance mark w/WEEK i/INDEX...`<br>e.g., `attendance mark w/4 i/1`                                                                                                       |
+| **Unmark attendance**             | `attendance unmark w/WEEK i/INDEX...`<br>e.g., `attendance unmark w/4 i/1`                                                                                                   |
+| **List submissions**              | `submission list [s/STUDENT_NAME_PREFIX] [t/TUTORIAL_NAME_PREFIX] [a/ASSIGNMENT_NAME_PREFIX]`<br>e.g., `submission list s/alex t/cs2103 a/week 10`                           |
+| **Set submission status**         | `submission set STATE t/TUTORIAL_NAME a/ASSIGNMENT_NAME s/STUDENT_NAME...`<br>e.g., `submission set submitted t/cs2103-f15 a/week 10 tasks s/alex yeoh`                      |
 | **Export students and tutorials** | `export`                                                                                                                                                                     |
 | **Export students**               | `export students [TUTORIAL_NAME]`<br>e.g., `export students`<br>e.g., `export students CS2103-T2`                                                                            |
 | **Export tutorials**              | `export tutorials`                                                                                                                                                           |

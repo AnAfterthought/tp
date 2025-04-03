@@ -32,9 +32,10 @@ public class ListSubmissionCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        model.updateFilteredSubmissionList(s -> s.assignment().name().startsWith(assignmentName)
-                        && s.assignment().tutorial().name().startsWith(tutorialName)
-                        && s.student().getName().toString().startsWith(studentName));
+        model.updateFilteredSubmissionList(s -> s.assignment().name().toLowerCase()
+                        .startsWith(assignmentName.toLowerCase())
+                        && s.assignment().tutorial().name().toLowerCase().startsWith(tutorialName.toLowerCase())
+                        && s.student().getName().toString().toLowerCase().startsWith(studentName.toLowerCase()));
 
         assert model.check();
         return new CommandResult(MESSAGE_SUCCESS, NavigationMode.SUBMISSION);
