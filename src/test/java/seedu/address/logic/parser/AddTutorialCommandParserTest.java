@@ -14,10 +14,10 @@ public class AddTutorialCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsAddTutorialCommand() {
-        Tutorial expectedTutorial = new Tutorial("CS2103-F15");
+        Tutorial expectedTutorial = new Tutorial("CS2103-_-abcdef");
         AddTutorialCommand expectedAddTutorialCommand = new AddTutorialCommand(expectedTutorial);
 
-        assertParseSuccess(parser, "CS2103-F15", expectedAddTutorialCommand);
+        assertParseSuccess(parser, "CS2103-_-abcdef", expectedAddTutorialCommand);
     }
 
     @Test
@@ -33,6 +33,13 @@ public class AddTutorialCommandParserTest {
     public void parse_multipleArgs_throwsParseException() {
         // multiple valid tutorial names is invalid (because of space)
         assertParseFailure(parser, "CS2103-F15 CS2103-F14",
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTutorialCommand.MESSAGE_MULTIPLE_NAMES));
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTutorialCommand.MESSAGE_INVALID_NAME));
+    }
+
+    @Test
+    public void parse_nameLongerThan15Chars_throwsParseException() {
+        // multiple valid tutorial names is invalid (because of space)
+        assertParseFailure(parser, "1234567890123456",
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTutorialCommand.MESSAGE_INVALID_NAME));
     }
 }

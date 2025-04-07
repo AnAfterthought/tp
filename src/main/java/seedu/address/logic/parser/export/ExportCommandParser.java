@@ -30,6 +30,7 @@ public class ExportCommandParser implements Parser<Command> {
 
         // All Student Lists || List of Students belonging to a Tutorial
         subcmds.put(ExportStudentsCommand.COMMAND_WORD, new ExportStudentsCommandParser());
+        subcmds.put(ExportTutorialsCommand.COMMAND_WORD, null); // temporary
 
         usage = """
                         Usage: export COMMAND

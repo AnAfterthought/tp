@@ -131,6 +131,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 throw new IllegalStateException(MESSAGE_UNKNOWN_ERROR);
             }
         }
+
     }
 
     /**
@@ -142,7 +143,26 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setStudent(Student target, Student editedstudent) throws DuplicateItemException, ItemNotFoundException {
         requireNonNull(editedstudent);
 
-        students.set(target, editedstudent);
+        if (students.containsIdentity(editedstudent, target)) {
+            throw new DuplicateItemException();
+        }
+
+        target.setName(editedstudent.getName());
+        target.setEmail(editedstudent.getEmail());
+        target.setHandle(editedstudent.getHandle());
+        target.setStudentId(editedstudent.getStudentId());
+        target.setDetails(editedstudent.getDetails());
+        target.setPhone(editedstudent.getPhone());
+
+        students.set(target, target);
+
+        for (var s : target.getSubmissions()) {
+            submissions.set(s, s);
+        }
+
+        for (var a : target.getAttendances()) {
+            attendances.set(a, a);
+        }
     }
 
     /**

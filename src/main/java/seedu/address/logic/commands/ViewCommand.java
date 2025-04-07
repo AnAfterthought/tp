@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_INCORRECT_NAVIGATION_MODE;
 
 import java.util.List;
 
@@ -35,6 +36,12 @@ public class ViewCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
+        if (model.getNavigationMode() != NavigationMode.STUDENT) {
+            return new CommandResult(MESSAGE_INCORRECT_NAVIGATION_MODE.formatted(NavigationMode.STUDENT),
+                            NavigationMode.STUDENT);
+        }
+
         List<Student> lastShownList = model.getFilteredStudentList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {

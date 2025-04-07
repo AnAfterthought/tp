@@ -13,7 +13,6 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_HANDLE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ID_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TUTORIAL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
@@ -56,21 +55,17 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Student expectedStudent = new StudentBuilder(BOB).withTutorials(VALID_TUTORIAL_1).build();
+        Student expectedStudent = new StudentBuilder(BOB).build();
 
         // whitespace only preamble
-        assertParseSuccess(parser,
-                        PREAMBLE_WHITESPACE + NAME_DESC_BOB + ID_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                                        + HANDLE_DESC_BOB + DETAILS_DESC_BOB + TUTORIAL_DESC_1,
-                        new AddCommand(expectedStudent));
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + ID_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                        + HANDLE_DESC_BOB + DETAILS_DESC_BOB, new AddCommand(expectedStudent));
 
         // multiple tags - all accepted
         Student expectedStudentMultipleTags = new StudentBuilder(BOB).withTutorials(VALID_TUTORIAL_1, VALID_TUTORIAL_2)
                         .build();
-        assertParseSuccess(parser,
-                        NAME_DESC_BOB + ID_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + HANDLE_DESC_BOB
-                                        + DETAILS_DESC_BOB + TUTORIAL_DESC_2 + TUTORIAL_DESC_1,
-                        new AddCommand(expectedStudentMultipleTags));
+        assertParseSuccess(parser, NAME_DESC_BOB + ID_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + HANDLE_DESC_BOB
+                        + DETAILS_DESC_BOB, new AddCommand(expectedStudentMultipleTags));
     }
 
     @Test
@@ -208,10 +203,6 @@ public class AddCommandParserTest {
         // invalid handle
         assertParseFailure(parser, NAME_DESC_BOB + ID_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_HANDLE_DESC
                         + TUTORIAL_DESC_2 + TUTORIAL_DESC_1, TelegramHandle.MESSAGE_CONSTRAINTS);
-
-        // invalid tutorial
-        assertParseFailure(parser, NAME_DESC_BOB + ID_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + HANDLE_DESC_BOB
-                        + INVALID_TUTORIAL_DESC + TUTORIAL_DESC_1, "Tutorial name is not valid.");
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser,

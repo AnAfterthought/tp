@@ -9,6 +9,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.NavigationMode;
 import seedu.address.model.student.Student;
 
 /**
@@ -34,6 +35,11 @@ public class DeleteCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
+        if (model.getNavigationMode() != NavigationMode.STUDENT) {
+            return new CommandResult(Messages.MESSAGE_INCORRECT_NAVIGATION_MODE.formatted(NavigationMode.STUDENT),
+                            NavigationMode.STUDENT);
+        }
         List<Student> lastShownList = model.getFilteredStudentList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {

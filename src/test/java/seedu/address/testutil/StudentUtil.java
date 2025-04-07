@@ -8,12 +8,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TUTORIAL_NAME;
 
-import java.util.Set;
-
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.EditCommand.EditStudentDescriptor;
 import seedu.address.model.student.Student;
-import seedu.address.model.tutorial.Tutorial;
 
 /**
  * A utility class for Student.
@@ -54,14 +51,6 @@ public class StudentUtil {
         descriptor.getEmail().ifPresent(email -> sb.append(PREFIX_EMAIL).append(email.value).append(" "));
         descriptor.getHandle().ifPresent(handle -> sb.append(PREFIX_HANDLE).append(handle.handle).append(" "));
         descriptor.getDetails().ifPresent(details -> sb.append(PREFIX_DETAILS).append(details.value).append(" "));
-        if (descriptor.getTutorials().isPresent()) {
-            Set<Tutorial> tags = descriptor.getTutorials().get();
-            if (tags.isEmpty()) {
-                sb.append(PREFIX_TUTORIAL_NAME);
-            } else {
-                tags.forEach(s -> sb.append(PREFIX_TUTORIAL_NAME).append(s.name()).append(" "));
-            }
-        }
         return sb.toString();
     }
 }

@@ -81,6 +81,7 @@ defaultTasks 'clean', 'test'
 spotless {
     format 'documentation', {
         target 'docs/*.md'
+        prettier().nodeExecutable("node")
     }
     format 'misc', {
         target '*.gradle', '.gitattributes', '.gitignore' // define the files to apply `misc` to

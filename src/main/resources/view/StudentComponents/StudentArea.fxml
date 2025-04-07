@@ -56,20 +56,6 @@
   <Label text="Tutorials with Student" styleClass="section-header"/>
   <FlowPane fx:id="tutorialsContainer" styleClass="tutorials-container"/>
 
-  <Separator/>
-
-  <Label text="Attendance and Assignment Performance" styleClass="section-header"/>
-  <VBox spacing="5">
-    <HBox spacing="10">
-      <Label text="Attendance Rate:" styleClass="info-label"/>
-      <Label fx:id="attendanceRateLabel" text="-"/>
-    </HBox>
-    <HBox spacing="10">
-      <Label text="Assignment Completion:" styleClass="info-label"/>
-      <Label fx:id="assignmentRateLabel" text="-"/>
-    </HBox>
-  </VBox>
-
 </VBox>
 </ScrollPane>
         </VBox>

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -21,8 +21,7 @@ import seedu.address.model.attendance.Attendance;
 import seedu.address.testutil.TypicalAddressBook;
 
 public class AttendanceCommandTest {
-    private static final Model modelStub = new ModelManager(TypicalAddressBook.getTypicalAddressBook(),
-                    new UserPrefs());
+    private static Model modelStub;
     private static final int START_WEEK = 3;
     private static final int END_WEEK = 13;
     private static final int TEST_WEEK = 5;
@@ -30,8 +29,9 @@ public class AttendanceCommandTest {
     private static final Index TEST_INDEX_ONE = Index.fromOneBased(1);
     private static final Index TEST_INDEX_TWO = Index.fromOneBased(2);
 
-    @BeforeAll
-    public static void setUp() {
+    @BeforeEach
+    public void setUp() {
+        modelStub = new ModelManager(TypicalAddressBook.getTypicalAddressBook(), new UserPrefs());
         modelStub.setNavigationMode(NavigationMode.ATTENDANCE);
     }
 
@@ -55,6 +55,25 @@ public class AttendanceCommandTest {
     }
 
     @Test
+    public void execute_markAttendanceDuplicateIndices_successfulSingle() throws Exception {
+        // EP: Duplicate indices
+
+        CommandResult commandResult;
+        List<Integer> expectedAttendances = new ArrayList<>(Collections.nCopies(NUMBER_OF_WEEKS, 0));
+        expectedAttendances.set(1, 1);
+        expectedAttendances.set(2, 1);
+
+        List<Index> indices = List.of(Index.fromOneBased(1), Index.fromOneBased(1));
+
+        // Week 5 == Index 2
+        commandResult = new MarkAttendanceCommand(TEST_WEEK, indices).execute(modelStub);
+        assertEquals(MarkAttendanceCommand.MESSAGE_SUCCESS, commandResult.getFeedbackToUser());
+
+        Attendance attendance = modelStub.getAddressBook().getAttendanceList().get(0);
+        assertArrayEquals(expectedAttendances.toArray(), attendance.attendances().toArray());
+    }
+
+    @Test
     public void execute_markAttendance_successfulSingle() throws Exception {
         execute_setAttendance_successfulSingle(true);
     }
@@ -62,6 +81,24 @@ public class AttendanceCommandTest {
     @Test
     public void execute_unmarkAttendance_successfulSingle() throws Exception {
         execute_setAttendance_successfulSingle(false);
+    }
+
+    @Test
+    public void execute_unmarkAttendanceDuplicateIndices_successfulSingle() throws Exception {
+        // EP: Duplicate indices
+
+        CommandResult commandResult;
+        List<Integer> expectedAttendances = new ArrayList<>(Collections.nCopies(NUMBER_OF_WEEKS, 0));
+        expectedAttendances.set(1, 0);
+
+        List<Index> indices = List.of(Index.fromOneBased(1), Index.fromOneBased(1));
+
+        // Week 5 == Index 2
+        commandResult = new UnmarkAttendanceCommand(4, indices).execute(modelStub);
+        assertEquals(UnmarkAttendanceCommand.MESSAGE_SUCCESS, commandResult.getFeedbackToUser());
+
+        Attendance attendance = modelStub.getAddressBook().getAttendanceList().get(0);
+        assertArrayEquals(expectedAttendances.toArray(), attendance.attendances().toArray());
     }
 
     private void execute_setAttendance_successfulMultiple(boolean isMark) throws Exception {

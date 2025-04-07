@@ -3,12 +3,17 @@ layout: page
 title: User Guide
 ---
 
-TAskbook is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).
-If you can type fast,
-TAskbook can get your contact management tasks done faster than traditional GUI apps.
+## TAskbook User Guide
 
-- Table of Contents
-  {:toc}
+TAskbook is a **desktop app for managing students, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).
+If you can type fast,
+TAskbook can get your student management tasks done faster than traditional GUI apps.
+
+## Table of Contents
+
+<!-- prettier-ignore -->
+- Table of Content
+{:toc}
 
 ---
 
@@ -26,24 +31,92 @@ TAskbook can get your contact management tasks done faster than traditional GUI 
    and use the `java -jar taskbook.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds.
    Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+   <img src="images/Ui.png" width="500" />
 
 1. Type the command in the command box and press Enter to execute it.
    e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   - `list` : Lists all contacts.
+   - `list`: Lists all students.
 
-   - `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@john_doe` :
-     Adds a contact named `John Doe` to the Address Book.
+   - `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@john_doe`:
+     Adds a student named `John Doe` to the Address Book.
 
-   - `delete 1` : Deletes the 1st contact shown in the current list.
+   - `delete 1`: Deletes the 1st student shown in the current list.
 
-   - `clear` : Deletes all contacts.
+   - `clear`: Deletes all students.
 
-   - `exit` : Exits the app.
+   - `exit`: Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+1. Refer to the [Features](#features) section below for details of each command.
+
+---
+
+## Application Views
+
+TAskbook operates in distinct views, which determine the information shown in the UI and what commands are available.
+The current view is indicated in the bottom-right corner of the application window.
+
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Note about views:**<br>
+
+- Some commands are only available in specific views.
+  If a command is entered in the wrong view, the application will automatically switch to the correct view.
+
+- The current view is remembered across reboots of the application.
+
+- The terms **"view"** and **"mode"** are used interchangeably in TAskbook.
+  They refer to the same concept.
+
+- For command-specific view requirements, please refer to the [Features](#features) section.
+
+</div>
+
+---
+
+### Types of Views
+
+#### STUDENT view
+
+For managing students and their tutorial enrollment.  
+<img src="images/student_view.png" width="500" />
+
+#### TUTORIAL view
+
+For managing tutorials and their assignments.  
+<img src="images/tutorial_view.png" width="500" />
+
+#### ATTENDANCE view
+
+For tracking student attendance.  
+<img src="images/attendance_view.png" width="500" />
+
+#### SUBMISSION view
+
+For managing student submissions and their statuses.  
+<img src="images/submission_view.png" width="500" />
+
+#### SINGLE_STUDENT view
+
+For viewing comprehensive details of a specific student.  
+<img src="images/single_student_view.png" width="500" />
+
+---
+
+### Switching Views
+
+The user can switch between views using the following commands:
+
+| Command           | View                    |
+| ----------------- | ----------------------- |
+| `list`            | **STUDENT view**        |
+| `tutorial list`   | **TUTORIAL view**       |
+| `attendance list` | **ATTENDANCE view**     |
+| `submission list` | **SUBMISSION view**     |
+| `view INDEX`      | **SINGLE_STUDENT view** |
+
+For more information on these commands, please refer to the [Features](#features) section.
 
 ---
 
@@ -71,162 +144,135 @@ TAskbook can get your contact management tasks done faster than traditional GUI 
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 - If you are using a PDF version of this document,
-be careful when copying and pasting commands that span multiple lines
-as space characters surrounding line-breaks may be omitted when copied over to the application.
+  be careful when copying and pasting commands that span multiple lines
+  as space characters surrounding line-breaks may be omitted when copied over to the application.
+
 </div>
 
-### Viewing help : `help`
+---
+
+### Command - Viewing help: `help`
+
+**Format**:  
+`help`
 
 Shows a message explaining how to access the help page.
 
 ![help message](images/helpMessage.png)
 
-Format: `help`
+---
 
-### Adding a student: `add`
+### Command - Clearing all entries: `clear`
+
+Clears all entries from the address book.
+
+**Format**:  
+`clear`
+
+---
+
+### Command - Exiting the program: `exit`
+
+Exits the program.
+
+**Format**:  
+`exit`
+
+---
+
+### Student Commands
+
+#### Command - Adding a student: `add`
 
 Adds a student to the address book.
 
-Format: `add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE [t/TUTORIAL]...`
+**Format**:  
+`add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE [desc/DESCRIPTION]`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A student can have any number of tags (including 0)
+<div markdown="block" class="alert alert-info">
+**Parameters**:
+- `NAME`: Alphanumeric characters and spaces only (cannot be blank)
+- `STUDENT_ID`: Format `AXXXXXXX[A-Z]` where `X` is a number between 0 - 9
+    - cannot be blank, must be unique
+- `PHONE`: Exactly 8 digits
+- `EMAIL`: Valid email format (e.g., user@example.com)
+- `HANDLE`: Format `@telegramhandle` (min 3 chars, cannot be blank)
+- `DESCRIPTION`: Max 50 characters
+- There cannot be duplicate students with the same `NAME`, `STUDENT_ID`,
+  `PHONE`, `EMAIL` or `HANDLE`.
 </div>
 
-Examples:
+**Examples**:
 
 - `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@john_doe`
-- `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@john_doe t/CS2103_T01 t/CS2106_T02`
 
-### Listing all students: `list`
+> **Warning:**
+>
+> - As of v1.5, description attribute is temporary for the session and will disappear on reboot of app
+
+---
+
+#### Command - Listing all students: `list`
 
 Shows a list of all students in the address book.
 
-Format: `list`
+**Format**:  
+`list`
 
-### Editing a student: `edit`
+---
+
+#### Command - Editing a student: `edit`
 
 Edits an existing student in the address book.
+You must be in `STUDENT` view.
 
-Format: `edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE] [t/TUTORIALS]...`
+**Format**:  
+`edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE] [desc/DESCRIPTION]`
 
-- Edits the student at the specified `INDEX`.
-  The index refers to the index number shown in the displayed student list.
-  The index **must be a positive integer** 1, 2, 3, ...
-- At least one of the optional fields must be provided.
-- Existing values will be updated to the input values.
-- When editing tutorial slots,
-  the existing set of tutorials allocated to the student will be replaced entirely with the new values provided i.e. adding of tutorials is not cumulative.
-- You can remove all the student’s tutorial slots by typing `t/` without
-  specifying any tutorials after it.
+<div markdown="block" class="alert alert-info">
+**Parameters**:
+- The `INDEX` must be a positive integer (1, 2, 3, ...)
+- At least one optional field must be provided
+</div>
 
-Examples:
+**Behavior**:
+
+- Updates all specified fields with new values
+- Preserves unspecified fields
+
+**Examples**:
 
 - `edit 1 p/91234567 e/johndoe@example.com`
   Edits the phone number and email address of the 1st student to be `91234567` and `johndoe@example.com` respectively.
-- `edit 2 n/Betsy Crower t/`
-  Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tutorial slots.
+- `edit 2 n/Betsy Crower`
+  Edits the name of the 2nd student to be `Betsy Crower`
 
-<!-- ### Locating students by name: `find` -->
-<!---->
-<!-- Finds students whose names contain any of the given keywords. -->
-<!---->
-<!-- Format: `find KEYWORD [MORE_KEYWORDS]` -->
-<!---->
-<!-- * The search is case-insensitive. e.g `hans` will match `Hans` -->
-<!-- * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans` -->
-<!-- * Only the name is searched. -->
-<!-- * Only full words will be matched e.g. `Han` will not match `Hans` -->
-<!-- * Students matching at least one keyword will be returned (i.e. `OR` search). -->
-<!--   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang` -->
-<!---->
-<!-- Examples: -->
-<!-- * `find John` returns `john` and `John Doe` -->
-<!-- * `find alex david` returns `Alex Yeoh`, `David Li`<br> -->
-<!--   ![result for 'find alex david'](images/findAlexDavidResult.png) -->
+---
 
-### Deleting a student: `delete`
+#### Command - Finding students: `find`
 
-Deletes the specified student from the address book.
+Finds all students whose names contain any of the specified keywords (case-insensitive)
+or who are in the specified tutorial group(s).
 
-Format: `delete INDEX`
+**Format**:  
+`find NAME... [t/TUTORIAL_NAME]`
 
-- Deletes the student at the specified `INDEX`.
-- The index refers to the index number shown in the displayed student list.
-- The index **must be a positive integer** 1, 2, 3, ...
+<div markdown="block" class="alert alert-info">
+**Parameters**:
+- `NAME` can have multiple values, separated by spaces
+- Search is case-insensitive
+- Returns students matching ANY name keyword with the tutorial filter
+</div>
 
-Examples:
+**Behavior**:
 
-- `list` followed by `delete 2` deletes the 2nd student in the address book.
-<!-- * `find Betsy` followed by `delete 1` deletes the 1st student in the results of the `find` command. -->
+- Displays results as a numbered list
+- Shows nothing and flag out usage guidelines if no parameters provided
+- Unsuccessful search returns empty list
+- Tutorial filter must match existing tutorial names exactly
 
-### Adding a tutorial: `tutorial add`
+**Examples**:
 
-Adds a tutorial slot to the address book.
-
-Format: `tutorial add NAME`
-
-- `NAME` can contain only: alphanumeric characters, underscore and hyphen.
-
-Examples:
-
-- `tutorial add cs2103-f15`
-
-### Deleting a tutorial: `tutorial delete`
-
-Deletes a tutorial slot from the address book.
-
-Format: `tutorial delete NAME`
-
-- `NAME` can contain only: alphanumeric characters, underscore and hyphen.
-
-Examples:
-
-- `tutorial delete cs2103-f15`
-
-### Listing all tutorials : `tutorial list`
-
-Shows a list of all tutorials in the address book.
-
-Format: `tutorial list`
-
-### Adding a student to a tutorial: `tutorial add-student`
-
-Adds a student to a tutorial slot.
-
-Format: `tutorial add-student TUTORIAL_NAME s/STUDENT_INDEX...`
-
-- `STUDENT_INDEX` **must be a positive integer** 1, 2, 3, ...
-
-Examples:
-
-- `list` then `tutorial add-student cs2103-f15 s/1`:
-  Adds the 1st student in the list to the tutorial slot `cs2103-f15`.
-
-### Deleting a student to a tutorial: `tutorial delete-student`
-
-Deletes a student from a tutorial slot.
-
-Format: `tutorial delete-student TUTORIAL_NAME s/STUDENT_INDEX...`
-
-- `STUDENT_INDEX` **must be a positive integer** 1, 2, 3, ...
-
-Examples:
-
-- `list` then `tutorial delete-student cs2103-f15 s/1`:
-  Deletes the 1st student in the list from the tutorial slot `cs2103-f15`.
-
-### Finding students : `find`
-
-Finds all students whose names contain any of the specified keywords (case-insensitive) or who are in the
-specified tutorial group(s), and displays them as a list with index numbers.
-
-Format: `find NAME_1 [NAME_2 NAME_3 ...] [t/TUTORIAL_NAME]`
-
-- `NAME` can have multiple, seperated by spaces
-- `TUTORIAL_NAME` has to be attached with 't/' and is optional
-
-Examples:
 - `find alice bob`:
   Finds any student(s) named alice or bob.
 - `find t/CS2103_T02`:
@@ -236,154 +282,571 @@ Examples:
 - `find alice bob t/CS2103_T02 t/CS2103_T03`:
   Finds any student(s) named alice or bob that is in any of the tutorials CS2103_T02 or CS2103_T03.
 
+---
 
-### Finding a tutorial : `tutorial find`
+#### Command - Deleting a student: `delete`
 
-Finds all tutorials whose names contain any of the specified keywords 
-(case-insensitive) and displays them as a list with index numbers.
+Deletes the specified student from the address book.
+You must be in `STUDENT` view.
 
-Format: `tutorial find TUTORIAL_NAME_1 [TUTORIAL_NAME_2 TUTORIAL_NAME_3 ...]`
+**Format**:  
+`delete INDEX`
 
-- `TUTORIAL_NAME` can be multiple, seperated by spaces
+<div markdown="block" class="alert alert-info">
+**Parameters**:
+- `INDEX` must be a positive integer (1, 2, 3,...)
+- Refers to the position in the currently displayed list
+- Operation cannot be undone
+</div>
 
-Examples:
+**Behavior**:
+
+- Permanently removes the student record
+
+**Examples**:
+
+- `delete 3`:
+  Deletes the 3rd student shown in the current list.
+- `find Alex` followed by `delete 1`:
+  Deletes the first student in the filtered 'Alex' results.
+- `list` followed by `delete 2`:
+  Deletes the 2nd student in the complete student list.
+
+<div markdown="block" class="alert alert-info">
+**Additional Note:**  
+Deleted students are immediately removed from:
+- Tutorial enrollments
+- Submission records
+- Attendance tracking
+</div>
+
+---
+
+#### Command - Viewing student details: `view`
+
+Displays comprehensive information for a specific student.
+You must be in `STUDENT` view.
+
+**Format**:  
+`view INDEX`
+
+<div markdown="block" class="alert alert-info">
+**Parameters**:
+- `INDEX`:
+  - Must be a positive integer (1, 2, 3,...)
+  - Corresponds to displayed student list position
+</div>
+
+**Behavior**:
+
+- Shows complete student profile
+
+**Example**:
+
+- `view 1`:
+  Displays full details for the first student in the current list.
+
+---
+
+### Tutorial Commands
+
+#### Command - Adding a tutorial: `tutorial add`
+
+Adds a tutorial slot to the address book.
+
+**Format**:  
+`tutorial add NAME`
+
+<div markdown="block" class="alert alert-info">
+**Parameters**:
+- `NAME` requirements:
+  - Must be unique (no duplicate tutorials)
+  - Maximum 15 characters
+  - Only alphanumeric, underscore (_) and hyphen (-) allowed
+  - Case-sensitive (CS2103 ≠ cs2103)
+</div>
+
+**Behavior**:
+
+- Creates new tutorial if all requirements met
+- Rejects invalid names
+
+**Examples**:
+
+- `tutorial add cs2103-f15`:
+  Creates tutorial "cs2103-f15" if valid and unique.
+- `tutorial add lab_01`:
+  Creates tutorial "lab_01" if doesn't exist.
+- `tutorial add CS2040-T01`:
+  Creates tutorial "CS2040-T01" if meets requirements.
+
+---
+
+#### Command - Listing all tutorials: `tutorial list`
+
+Shows a list of all tutorials and created assignments in the address book.
+
+**Format**:  
+`tutorial list`
+
+---
+
+#### Command - Finding a tutorial: `tutorial find`
+
+Finds tutorials matching specified keywords in their names.
+
+**Format**:  
+`tutorial find SEARCH...`
+
+<div markdown="block" class="alert alert-info">
+**Parameters**:
+- `SEARCH` is case-insensitive
+- Partial matches are allowed ("CS210" matches "CS2103_T01")
+- Multiple space-separated keywords will find tutorials matching ANY keyword
+</div>
+
+**Behavior**:
+
+- Displays results as a numbered list
+- Returns empty list if no matches found
+
+**Examples**:
+
 - `tutorial find CS2103_T02`:
-  Finds any tutorial(s) named CS2103_T02.
+  Finds tutorial(s) with "cs2103_t02" in name (regardless of case).
 - `tutorial find CS2103_T02 CS2103_T03`:
-  Finds any tutorial(s) named CS2103_T02 or CS2103_T03.
+  Finds tutorials containing either "cs2103_t02" or "cs2103_t03".
 - `tutorial find CS2103`:
-  Finds any tutorial(s) that has CS2103 in the name.
+  Finds all tutorials with "cs2103" anywhere in their names.
 
-### Listing attendance: `attendance list`
+---
 
-Shows a list of attendances in the address book. It can list all attendances, the attendance for a specific student or
-attendance for a specific tutorial.
+#### Command - Deleting a tutorial: `tutorial delete`
 
-Format: `attendance list [INDEX]`
+Deletes a tutorial slot from the address book.
 
-- `INDEX` **must be a positive integer** 1, 2, 3, ...
-- If the command is run from the student view, `INDEX` refers to the index number shown in the student list.
-- If the command is run from the tutorial view, `INDEX` refers to the index number shown in the tutorial list.
+**Format**:  
+`tutorial delete TUTORIAL_NAME`
 
-Examples:
+<div markdown="block" class="alert alert-info">
+**Parameters**:
+- `TUTORIAL_NAME` must:
+  - Exactly match an existing tutorial name (case-sensitive)
+  - Contain only alphanumeric characters, underscores (_), and hyphens (-)
+  - Not be blank
+</div>
 
-- From student view, `attendance list 1` lists the attendance of the first student on the list.
-- From tutorial view, `attendance list 1` lists the attendance of the first tutorial on the list.
-- If there are invalid arguments, i.e. `attendance list a`, the default behaviour will list all attendances in the
-  address book.
+**Behavior**:
 
-### Mark attendance: `attendance mark`
+- Permanently removes the tutorial
+- Automatically unenrolls all students from this tutorial
+- Maintains student records (only removes tutorial association)
 
-Marks student(s) attendance for a specified week.
+**Examples**:
 
-Format: `attendance mark w/WEEK i/INDEX...`
+- `tutorial delete cs2103-f15`:
+  Deletes the tutorial named exactly "cs2103-f15".
+- `tutorial delete Lab_Section1`:
+  Deletes the tutorial named exactly "Lab_Section1".
 
-- `WEEK` **must be a positive integer** from 3 to 13 (inclusive).
-- `INDEX` **must be a positive integer** 1, 2, 3, ...
-- `INDEX` refers to the index number shown in the displayed attendance list.
+---
 
-Examples:
+#### Command - Adding a student to tutorial: `tutorial add-student`
 
-- `attendance list`, then `attendance mark w/3 i/1`
-- `attendance list`, then `attendance mark w/13 i/1 i/2`
-- From student view, tutorial view or submission view,
-  `attendance mark` command will bring the user to attendance view and list all attendances.
+Adds a student to a tutorial slot.
+You must be in `STUDENT` view.
 
-### Unmark attendance: `attendance unmark`
+**Format**:  
+`tutorial add-student TUTORIAL_NAME s/STUDENT_INDEX...`
 
-Unmarks student(s) attendance for a specified week.
+<div markdown="block" class="alert alert-info">
+**Parameters**:
+- `STUDENT_INDEX` must be:
+  - A positive integer (1, 2, 3,...)
+  - Valid for current student list display
+- `TUTORIAL_NAME` must exactly match an existing tutorial (case sensitive)
+- Students cannot be added to the same tutorial multiple times
+</div>
 
-Format: `attendance unmark w/WEEK i/INDEX...`
+**Behavior**:
 
-- `WEEK` **must be a positive integer** from 3 to 13 (inclusive).
-- `INDEX` **must be a positive integer** 1, 2, 3, ...
-- `INDEX` refers to the index number shown in the displayed attendance list.
+- Adds student to specified tutorial
+- No effect if student already in tutorial
 
-Examples:
+**Examples**:
 
-- `attendance list`, then `attendance unmark w/3 i/1`
-- `attendance list`, then `attendance unmark w/13 i/1 i/2`
-- From student view, tutorial view or submission view,
-  `attendance unmark` command will bring the user to attendance view and list all attendances.
+- `list` then `tutorial add-student cs2103-f15 s/1`:
+  Adds the 1st displayed student to tutorial "cs2103-f15".
+- `find Alice` then `tutorial add-student cs2101-t03 s/1`:
+  Adds Alice (1st in filtered list) to tutorial "cs2101-t03".
 
-### Listing submissions: `submission list`
+---
 
-Lists all submissions.
+#### Command - Deleting a student from tutorial: `tutorial delete-student`
 
-Format: `submission list [s/STUDENT_NAME_PREFIX] [t/TUTORIAL_NAME_PREFIX] [a/ASSIGNMENT_NAME_PREFIX]`
+Removes a student from a tutorial slot.
+You must be in `STUDENT` view.
 
-- If `STUDENT_NAME_PREFIX` is specified,
-  it will list all submissions for students whose names **start with** `STUDENT_NAME_PREFIX`.
-- If `TUTORIAL_NAME_PREFIX` is specified,
-  it will list all submissions for tutorials whose names **start with** `TUTORIAL_NAME_PREFIX`.
-- If `ASSIGNMENT_NAME_PREFIX` is specified,
-  it will list all submissions for assignments whose names **start with** `ASSIGNMENT_NAME_PREFIX`.
-- Note: The filtering is performed in a **case-insensitive** manner.
+**Format**:  
+`tutorial delete-student TUTORIAL_NAME s/STUDENT_INDEX...`
 
-Examples:
+<div markdown="block" class="alert alert-info">
+**Parameters**:
+- `STUDENT_INDEX` must be:
+  - A positive integer (1, 2, 3,...)
+  - Valid for current student list display
+- `TUTORIAL_NAME` must exactly match an existing tutorial (case sensitive)
+- Operation affects only tutorial enrollment
+</div>
 
-- `submission list`
-- `submission list t/cs2103` lists submissions of tutorial **starting with** `cs2103`
-- `submission list a/lab 1` lists submissions of assignments that **starts with** `lab 1`
+**Behavior**:
 
-### Setting submission status: `submission set`
+- Removes student from specified tutorial
+- No effect if student not enrolled in tutorial
 
-Sets the submission status of a submission
+**Examples**:
 
-Format: `submission set STATE t/TUTORIAL_NAME a/ASSIGNMENT_NAME s/STUDENT_NAME...`
+- `list` then `tutorial delete-student cs2103-f15 s/1`:
+  Removes the 1st displayed student from tutorial "cs2103-f15".
+- `find Alice` then `tutorial delete-student cs2101-t03 s/1`:
+  Removes Alice (1st in filtered list) from tutorial "cs2101-t03".
 
-- `STATE` must be one of the following values: `not-submitted`, `submitted`, `graded`
+---
 
-Examples:
+### Assignment Commands
 
-- `submission set submitted t/CS2103-F15 a/Week 10 Tasks s/Bernice Yu`
-- `submission set submitted t/CS2103-F15 a/Week 10 Tasks s/Bernice Yu s/Alex Yeoh`
+#### Command - Listing assignments
 
-### Clearing all entries : `clear`
+<div markdown="block" class="alert alert-info">
+**Note**
 
-Clears all entries from the address book.
+There is no command for listing assignments.
+They can be viewed in the `TUTORIAL` view.
+Type `tutorial list` to view tutorials and its corresponding assignments.
 
-Format: `clear`
+</div>
 
-### Exporting Students and Tutorials : `export`
+#### Command - Adding an assignment: `assignment add`
 
-Exports the list of students and tutorials to `data/students.csv` and `data/tutorials.csv` respectively.
+Creates a new assignment for specified tutorials.
+You must be in `TUTORIAL` view.
 
-Format: `export`
+**Format**:  
+`assignment add ASSIGNMENT_NAME [t/TUTORIAL_INDEX]... [d/DUE_DATE]`
 
-### Exporting Students : `export students`
+<div markdown="block" class="alert alert-info">
+**Parameters**:
+- `ASSIGNMENT_NAME` must:
+  - Be 1-35 characters long
+  - Contain only: letters (A-Z,a-z), digits (0-9), underscores (_), hyphens (-) and spaces
+  - Be case-sensitive ("Lab_1" ≠ "lab_1")
+  - Be unique per tutorial
+- `TUTORIAL_INDEX` must:
+  - Be a positive integer for existing tutorials
+  - Can be multiple
+- `DUE_DATE` (optional) must:
+  - Use exact format: `uuuu-MM-dd HH:mm`
+- Interface will require manual adjustment for long names (>5 chars)
+- Tutorial indexes refer to current display order
+- Duplicate assignments will be rejected with error
+- Invalid date formats will be rejected
+</div>
 
-Exports the list of students to `data/students.csv`.
+**Examples**:
 
-Format: `export students`
+- `assignment add Lab1 t/1 t/2`:
+  Creates basic assignment for listed tutorials in index 1 and 2.
+- `assignment add Final_Project t/3 d/2023-12-15 16:00`:
+  Creates assignment with due date.
+- `assignment add Quiz-1 t/1 t/99`:
+  Only creates for valid tutorial (ignores invalid).
 
-Exports the list of students from a specified tutorial to `data/students-TUTORIAL_NAME.csv`.
+**Behaviour**:
 
-Format: `export students TUTORIAL_NAME`
+- An error will be shown (but the rest of the tutorials will be processed):
+  - Invalid tutorial indexes will
+  - Assignments not in specified tutorial
 
-Examples:
+---
 
-- `export students`
-- `export students CS2103-T2`
+#### Command - Deleting an assignment: `assignment delete`
 
-### Exporting Tutorials : `export tutorials`
+Removes an assignment from specified tutorials.
+You must be in `TUTORIAL` view.
 
-Exports the list of tutorials to `data/tutorials.csv`.
+**Format**:  
+`assignment delete ASSIGNMENT_NAME [t/TUTORIAL_INDEX]...`
 
-Format: `export tutorials`
+<div markdown="block" class="alert alert-info">
+**Parameters**:
+- `ASSIGNMENT_NAME` must:
+  - Match exactly (case-sensitive)
+  - Exist in the specified tutorial
+- `TUTORIAL_INDEX` refers to:
+  - Current display position (after any filters)
+  - Must be a positive integer
+  - Can be multiple
+</div>
 
-### Exiting the program : `exit`
+**Behavior**:
 
-Exits the program.
+- Removes assignment from all specified tutorials
+- An error will be shown (but the rest of the tutorials will be processed):
+  - Invalid tutorial indexes will
+  - Assignments not in specified tutorial
+- Preserves all student submissions
 
-Format: `exit`
+**Examples**:
 
-### Saving the data
+- `assignment delete Lab1 t/1`:
+  Deletes "Lab1" from tutorial at position 1 in current view.
+- `list` then `assignment delete Final_Project t/2 t/3`:
+  Deletes "Final_Project" from tutorials at positions 2 and 3.
+- `tutorial find cs2103` then `assignment delete Quiz1 t/1`:
+  Deletes "Quiz1" from first tutorial in filtered CS2103 list.
+
+---
+
+### Submission Commands
+
+#### Command - Listing submissions: `submission list`
+
+Displays a comprehensive overview of all student enrollments
+and their assignment completion status across tutorials.
+
+**Format**:  
+`submission list`
+
+---
+
+#### Command - Setting submission status: `submission set`
+
+Updates the completion status of specified student submissions.
+
+**Format**:  
+`submission set STATE t/TUTORIAL_NAME a/ASSIGNMENT_NAME s/STUDENT_NAME`
+
+<div markdown="block" class="alert alert-info">
+**Parameters**:
+
+- `STATE`: Required completion state (`not-submitted` \| `submitted` \| `graded`)
+- `TUTORIAL_NAME`: Case-sensitive exact tutorial name match
+- `ASSIGNMENT_NAME`: Case-sensitive exact assignment name match
+- `STUDENT_NAME`: Case-sensitive exact student name match
+</div>
+
+**Behavior**:
+
+- Rejects entire operation if any parameter is invalid
+
+**Examples**:
+
+- `submission set submitted t/CS2103-F15 a/Midterm s/Bernice Yu`:
+  Marks Bernice Yu's submission as "submitted".
+- `submission set graded t/CS2103-F15 a/Midterm s/Alex Yeoh s/Charlotte Li`:
+  Records "graded" status for two students' midterms.
+
+---
+
+### Attendance Commands
+
+#### Command - Listing attendance: `attendance list`
+
+Displays attendance records for students or tutorials.
+You can be in any view to execute this command,
+but different views have different behaviors.
+
+**Format**:  
+`attendance list [INDEX]`
+
+<div markdown="block" class="alert alert-info">
+**Parameters**:
+- `INDEX`:
+  - Positive integer (1, 2, 3,...)
+  - Context-sensitive interpretation:
+    - In student view: refers to student index
+    - In tutorial view: refers to tutorial index
+</div>
+
+**Behavior**:
+
+- Without index: shows all attendance records
+- With index: shows records for specified student/tutorial
+- Multiple entries possible per student (across different tutorials)
+- Invalid input defaults to full attendance list
+- Displays:
+  - Week numbers
+  - Attendance status (Present/Absent)
+
+**Examples**:
+
+- `list` then `attendance list 1`:
+  Shows attendance for all tutorials under the first student in current student list.
+- `tutorial list` then `attendance list 2`:
+  Shows attendance for all students enrolled in second tutorial in current tutorial list.
+- `attendance list`:
+  Displays complete attendance records for all students (one student one tutorial per row).
+
+<div markdown="block" class="alert alert-info">
+**Parameters**:
+For accurate results:
+1. First use `list` or `tutorial list`
+2. Then specify the desired index  
+  - This ensures correct context for the attendance query
+</div>
+
+---
+
+#### Command - Marking attendance: `attendance mark`
+
+Records student attendance for a specific week.
+You must be in `ATTENDANCE` view.
+
+**Format**:  
+`attendance mark w/WEEK i/INDEX...`
+
+<div markdown="block" class="alert alert-info">
+**Parameters**:
+- `WEEK`:
+  - Single week number (3-13 inclusive)
+  - Only one `w/` parameter allowed per command
+- `INDEX`:
+  - One or more positive integers
+  - Refers to positions in current attendance list
+  - Invalid indexes are skipped and an error message will be shown
+</div>
+
+**Behavior**:
+
+- Marks specified students as "Present" for the week
+- Handles multiple students in single command
+
+**Examples**:
+
+- `attendance mark w/3 i/1`:
+  Marks first student in attendance list as present for week 3.
+- `attendance mark w/13 i/1 i/2`:
+  Marks students at positions 1 and 2 as present for week 13.
+
+> **Usage Notes**:
+>
+> - Always check current attendance list before marking
+> - Changes take effect immediately
+
+---
+
+#### Command - Unmarking attendance: `attendance unmark`
+
+Removes attendance records for specified students in a given week.
+You must be in `ATTENDANCE` view.
+
+**Format**:  
+`attendance unmark w/WEEK i/INDEX...`
+
+<div markdown="block" class="alert alert-info">
+**Parameters**:
+- `WEEK`:
+  - Single week number (3-13 inclusive)
+  - Only one `w/` parameter allowed per command
+- `INDEX`:
+  - One or more positive integers
+  - Refers to positions in current attendance list
+  - Invalid indexes are skipped and an error message will be shown
+</div>
+
+**Behavior**:
+
+- Sets specified students' status to "Absent" for the week
+- Processes multiple students in a single command
+
+**Examples**:
+
+- `attendance unmark w/3 i/1`:
+  Removes attendance mark for first student in week 3.
+- `attendance unmark w/13 i/1 i/2`:
+  Unmarks attendance for students at positions 1 and 2 in week 13.
+
+> **Usage Notes**:
+>
+> - Verify current attendance list before unmarking
+> - Changes are immediate and irreversible
+
+---
+
+### Export Commands
+
+#### Command - Command - Exporting data: `export`
+
+Generates CSV files of system data for external use.
+
+##### Export All Data
+
+**Format**:  
+`export`
+
+**Behavior**:
+
+- Creates two files:
+  - `data/students.csv` (all student records)
+  - `data/tutorials.csv` (all tutorial records)
+- Overwrites existing files without confirmation
+- Includes all active records regardless of current view
+
+##### Export Students
+
+**Format**:  
+`export students [TUTORIAL_NAME]`
+
+<div markdown="block" class="alert alert-info">
+**Parameters**:
+- `TUTORIAL_NAME`:
+  - Case-sensitive exact tutorial name
+  - Optional (exports all students if omitted)
+</div>
+
+**Behavior**:
+
+- Without parameter: `data/students.csv` (all students)
+- With parameter: `data/students-TUTORIAL_NAME.csv`
+- Only includes currently enrolled students
+- Preserves special characters in names
+
+**Examples**:
+
+- `export students`:
+  Exports all students to students.csv.
+- `export students CS2103-T2`:
+  Creates students-CS2103-T2.csv with tutorial-specific enrollments.
+
+##### Export Tutorials
+
+**Format**:  
+`export tutorials`
+
+**Behavior**:
+
+- Generates `data/tutorials.csv`
+- Includes all tutorial metadata
+- Maintains original creation timestamps
+
+<div markdown="block" class="alert alert-secondary">
+**System Notes**:
+
+- CSV format uses UTF-8 encoding
+- First row contains column headers
+- Files are overwritten silently
+- Export directory must exist
+- Partial exports may occur if data is corrupted
+</div>
+
+---
+
+## Saving the data
 
 TAskbook data are saved in the hard disk automatically after any command that changes the data.
 There is no need to save manually.
 
-### Editing the data file
+## Editing the data file
 
 TAskbook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`.
 Advanced users are welcome to update data directly by editing that data file.
@@ -397,55 +860,86 @@ Furthermore, certain edits can cause the TAskbook to behave in unexpected ways
 Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
-<!-- ### Archiving data files `[coming in v2.0]` -->
-<!---->
-<!-- _Details coming soon ..._ -->
-
----
-
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer
-and overwrite the empty data file it creates with the file that contains the data of your previous TAskbook home folder.
-
----
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous TAskbook home folder.
 
 ## Known issues
 
-1. **When using multiple screens**, if you move the application to a secondary screen,
-   and later switch to using only the primary screen,
-   the GUI will open off-screen.
-   The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command
-   (or use the `Help` menu, or the keyboard shortcut `F1`) again,
-   the original Help Window will remain minimized,
-   and no new Help Window will appear.
-   The remedy is to manually restore the minimized Help Window.
+1. **Multi-screen display**:  
+   When moving the application between screens, the GUI may open off-screen.  
+   _Fix_: Delete `preferences.json` before restarting.
 
----
+2. **Help Window**:  
+   Minimized help windows don't restore properly when reopening help.  
+   _Fix_: Manually restore the window.
 
-## Command summary
+3. **Data Synchronization (v1.5)**:
 
-| **Action**                        | **Format, Examples**                                                                                                                                                         |
-| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Help**                          | `help`                                                                                                                                                                       |
-| **Add student**                   | `add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE [t/TUTORIAL]...`<br>e.g., `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@johndoe t/CS2103_T01 t/CS2106_T02` |
-| **List students**                 | `list`                                                                                                                                                                       |
-| **Edit student**                  | `edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE] [t/TUTORIALS]...`<br>e.g., `edit 1 p/91234567 e/johndoe@example.com`                                      |
-| **Delete student**                | `delete INDEX`<br>e.g., `delete 2`                                                                                                                                           |
-| **Tutorial Add**                  | `tutorial add NAME`<br>e.g., `tutorial add cs2103-f15`                                                                                                                       |
-| **Tutorial Delete**               | `tutorial delete NAME`<br>e.g., `tutorial delete cs2103-f15`                                                                                                                 |
-| **Tutorial List**                 | `tutorial list`                                                                                                                                                              |
-| **Add student to tutorial**       | `tutorial add-student TUTORIAL_NAME s/STUDENT_INDEX`<br>e.g., `tutorial add-student cs2103-f15 s/1`                                                                          |
-| **Delete student from tutorial**  | `tutorial delete-student TUTORIAL_NAME s/STUDENT_INDEX`<br>e.g., `tutorial delete-student cs2103-f15 s/1`                                                                    |
-| **List attendances**              | `attendance list [INDEX]`<br>e.g., `attendance list`                                                                                                                         |
-| **Mark attendance**               | `attendance mark w/WEEK i/INDEX...`<br>e.g., `attendance mark w/4 i/1`                                                                                                       |
-| **Unmark attendance**             | `attendance unmark w/WEEK i/INDEX...`<br>e.g., `attendance unmark w/4 i/1`                                                                                                   |
-| **List submissions**              | `submission list [s/STUDENT_NAME_PREFIX] [t/TUTORIAL_NAME_PREFIX] [a/ASSIGNMENT_NAME_PREFIX]`<br>e.g., `submission list s/alex t/cs2103 a/week 10`                           |
-| **Set submission status**         | `submission set STATE t/TUTORIAL_NAME a/ASSIGNMENT_NAME s/STUDENT_NAME...`<br>e.g., `submission set submitted t/cs2103-f15 a/week 10 tasks s/alex yeoh`                      |
-| **Export students and tutorials** | `export`                                                                                                                                                                     |
-| **Export students**               | `export students [TUTORIAL_NAME]`<br>e.g., `export students`<br>e.g., `export students CS2103-T2`                                                                            |
-| **Export tutorials**              | `export tutorials`                                                                                                                                                           |
-| **Clear**                         | `clear`                                                                                                                                                                      |
-| **Exit**                          | `exit`                                                                                                                                                                       |
+   - Add the ability to edit tutorial by using Tutorial tags (`t/`)
+   - Student descriptions are session-only (lost on app restart)
+
+4. **Data Export (v1.5)**:
+
+   - Doesn't include:
+     - Submission histories
+     - Attendance records
+   - Limited to current session data
+
+5. **Interface Issues**:
+
+   - Window resizing required for long assignment names (>5 chars)
+   - Tutorial indexes change after filtering/sorting
+
+6. **System Limitations**:
+   - No bulk operations across multiple tutorials
+   - Orphaned submissions may exist after deletions
+
+_View Planned resolutions in Developer Guide for more information_
+
+## Command Summary
+
+| **Action**                     | **Required View**                               | **Format, Examples**                                                                                                                                  |
+| ------------------------------ | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Student Management**         |                                                 |                                                                                                                                                       |
+| `Add student`                  |                                                 | `add n/NAME i/STUDENT_ID p/PHONE e/EMAIL h/HANDLE [desc/DESCRIPTION]`<br>e.g., `add n/John Doe i/A0123456Z p/98765432 e/johnd@example.com h/@johndoe` |
+| `Edit student`                 | `STUDENT`                                       | `edit INDEX [n/NAME] [i/STUDENT_ID] [p/PHONE] [e/EMAIL] [h/HANDLE] [desc/DESCRIPTION]`<br>e.g., `edit 1 p/91234567`                                   |
+| `Delete student`               | `STUDENT`                                       | `delete INDEX`<br>e.g., `delete 2`                                                                                                                    |
+| `List students`                |                                                 | `list`                                                                                                                                                |
+| `View student`                 | `STUDENT`                                       | `view INDEX`<br>e.g., `view 2`                                                                                                                        |
+| `Find students`                |                                                 | `find NAME [t/TUTORIAL]`<br>e.g., `find Alice t/CS2103`                                                                                               |
+| **Tutorial Management**        |                                                 |                                                                                                                                                       |
+| `Add tutorial`                 |                                                 | `tutorial add NAME`<br>e.g., `tutorial add cs2103-f15`                                                                                                |
+| `Delete tutorial`              |                                                 | `tutorial delete NAME`<br>e.g., `tutorial delete cs2103-f15`                                                                                          |
+| `List tutorials`               |                                                 | `tutorial list`                                                                                                                                       |
+| `Find tutorials`               |                                                 | `tutorial find NAME`<br>e.g., `tutorial find CS2103`                                                                                                  |
+| `Add student to tutorial`      | `STUDENT`                                       | `tutorial add-student TUTORIAL s/INDEX...`<br>e.g., `tutorial add-student cs2103-f15 s/1`                                                             |
+| `Remove student from tutorial` | `STUDENT`                                       | `tutorial delete-student TUTORIAL s/INDEX...`<br>e.g., `tutorial delete-student cs2103-f15 s/1`                                                       |
+| **Academic Tracking**          |                                                 |                                                                                                                                                       |
+| `Add assignment`               | `TUTORIAL`                                      | `assignment add NAME t/TUTORIAL... [d/DATE]`<br>e.g., `assignment add Lab1 t/1 d/2023-11-30 14:00`                                                    |
+| `Delete assignment`            | `TUTORIAL`                                      | `assignment delete NAME t/TUTORIAL...`<br>e.g., `assignment delete Lab1 t/1`                                                                          |
+| `Mark attendance`              | `ATTENDANCE`                                    | `attendance mark w/WEEK i/INDEX...`<br>e.g., `attendance mark w/4 i/1`                                                                                |
+| `Unmark attendance`            | `ATTENDANCE`                                    | `attendance unmark w/WEEK i/INDEX...`<br>e.g., `attendance unmark w/4 i/1`                                                                            |
+| `List attendance`              | `STUDENT` or `TUTORIAL` if `INDEX` is specified | `attendance list [INDEX]`<br>e.g., `attendance list 1`                                                                                                |
+| `Set submission status`        |                                                 | `submission set STATE t/TUTORIAL a/ASSIGNMENT s/STUDENT...`<br>e.g., `submission set submitted t/cs2103 a/lab1 s/Alice`                               |
+| `List submissions`             |                                                 | `submission list [s/STUDENT] [t/TUTORIAL] [a/ASSIGNMENT]`<br>e.g., `submission list t/cs2103 a/lab1`                                                  |
+| **Data Export**                |                                                 |                                                                                                                                                       |
+| `Export all`                   |                                                 | `export`                                                                                                                                              |
+| `Export students`              |                                                 | `export students [TUTORIAL]`<br>e.g., `export students CS2103-T2`                                                                                     |
+| `Export tutorials`             |                                                 | `export tutorials`                                                                                                                                    |
+| **System**                     |                                                 |                                                                                                                                                       |
+| `Clear data`                   |                                                 | `clear`                                                                                                                                               |
+| `Help`                         |                                                 | `help`                                                                                                                                                |
+| `Exit`                         |                                                 | `exit`                                                                                                                                                |
+
+## Troubleshooting
+
+1. **Data not saving**: Ensure you have write permissions in the installation directory.
+2. **Invalid command errors**: Check for exact parameter formats and case sensitivity.
+3. **Missing features**: Some advanced features are planned for v2.0.
+
+## Acknowledgements
+
+- Built using JavaFX
+- Inspired by AddressBook-Level3

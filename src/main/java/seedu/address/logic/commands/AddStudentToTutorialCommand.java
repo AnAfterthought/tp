@@ -1,7 +1,10 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_INCORRECT_NAVIGATION_MODE;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
@@ -26,6 +29,7 @@ public class AddStudentToTutorialCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Students added to tutorial!";
 
     public static final String MESSAGE_TUTORIAL_NOT_FOUND = "Tutorial not found";
+    public static final String MESSAGE_TUTORIAL_HAS_BEEN_ADDED = "Student is already enrolled in the tutorial!";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found";
 
     private final List<Index> indices;
@@ -46,26 +50,42 @@ public class AddStudentToTutorialCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
+        if (model.getNavigationMode() != NavigationMode.STUDENT) {
+            return new CommandResult(MESSAGE_INCORRECT_NAVIGATION_MODE.formatted(NavigationMode.STUDENT),
+                            NavigationMode.STUDENT);
+        }
+
         if (!model.hasTutorial(tutorial)) {
             throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND);
         }
 
         List<Student> lastShownList = model.getFilteredStudentList();
 
-        for (Index index : indices) {
+        var errMsg = new ArrayList<String>();
+        for (Index index : new LinkedHashSet<>(indices)) {
             // Check that index is in bounds.
             if (index.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+                errMsg.add(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+                continue;
             }
 
             Student studentToEdit = lastShownList.get(index.getZeroBased());
             assert model.hasStudent(studentToEdit);
 
-            try {
-                model.addStudentToTutorial(tutorial, studentToEdit);
-            } catch (ItemNotFoundException e) {
-                throw new CommandException(Messages.MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorial.name()));
+            if (studentToEdit.hasTutorial(tutorial)) {
+                errMsg.add(MESSAGE_TUTORIAL_HAS_BEEN_ADDED);
+            } else {
+                try {
+                    model.addStudentToTutorial(tutorial, studentToEdit);
+                } catch (ItemNotFoundException e) {
+                    errMsg.add(Messages.MESSAGE_TUTORIAL_NOT_FOUND.formatted(tutorial.name()));
+                }
             }
+
+        }
+        if (!errMsg.isEmpty()) {
+            throw new CommandException("Warning: %s".formatted(errMsg.toString()));
         }
 
         assert model.check();

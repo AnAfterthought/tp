@@ -27,16 +27,11 @@ public class AddTutorialCommandParser implements Parser<AddTutorialCommand> {
             throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT.formatted(AddTutorialCommand.MESSAGE_USAGE));
         }
 
-        if (tutorialName.contains(" ")) {
-            throw new ParseException(
-                            MESSAGE_INVALID_COMMAND_FORMAT.formatted(AddTutorialCommand.MESSAGE_MULTIPLE_NAMES));
+        try {
+            return new AddTutorialCommand(new Tutorial(tutorialName));
+        } catch (Exception e) {
+            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT.formatted(e.getMessage()));
         }
-
-        if (!Tutorial.isValidName(tutorialName)) {
-            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT.formatted(AddTutorialCommand.MESSAGE_INVALID_NAME));
-        }
-
-        return new AddTutorialCommand(new Tutorial(tutorialName));
     }
 
 }

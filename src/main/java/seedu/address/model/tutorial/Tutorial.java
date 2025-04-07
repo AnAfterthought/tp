@@ -3,6 +3,7 @@ package seedu.address.model.tutorial;
 import java.util.Objects;
 import java.util.Optional;
 
+import seedu.address.logic.commands.AddTutorialCommand;
 import seedu.address.model.attendance.Attendance;
 import seedu.address.model.student.Student;
 import seedu.address.model.uniquelist.Identifiable;
@@ -37,8 +38,9 @@ public record Tutorial(String name, UniqueList<Assignment> assignments,
      */
     public Tutorial {
         Objects.requireNonNull(name);
+        name = name.trim();
         if (!isValidName(name)) {
-            throw new IllegalArgumentException("Tutorial name is invalid.");
+            throw new IllegalArgumentException(AddTutorialCommand.MESSAGE_INVALID_NAME);
         }
     }
 
@@ -83,7 +85,7 @@ public record Tutorial(String name, UniqueList<Assignment> assignments,
      */
     public static boolean isValidName(String name) {
         Objects.requireNonNull(name);
-        final var pattern = "[a-zA-Z0-9_-]+";
+        final var pattern = "[a-zA-Z0-9_-]{1,15}";
 
         return name.matches(pattern);
     }

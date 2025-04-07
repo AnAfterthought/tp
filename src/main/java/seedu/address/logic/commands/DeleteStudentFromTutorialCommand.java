@@ -1,7 +1,10 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_INCORRECT_NAVIGATION_MODE;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
@@ -46,25 +49,43 @@ public class DeleteStudentFromTutorialCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
+        if (model.getNavigationMode() != NavigationMode.STUDENT) {
+            return new CommandResult(MESSAGE_INCORRECT_NAVIGATION_MODE.formatted(NavigationMode.STUDENT),
+                            NavigationMode.STUDENT);
+        }
+
         if (!model.hasTutorial(tutorial)) {
             throw new CommandException(MESSAGE_TUTORIAL_NOT_FOUND);
         }
 
         List<Student> lastShownList = model.getFilteredStudentList();
 
-        for (Index index : indices) {
+        var errMsg = new ArrayList<String>();
+        for (Index index : new LinkedHashSet<>(indices)) {
             // Check that index is in bounds.
             if (index.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+                errMsg.add(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+                continue;
             }
 
             Student studentToEdit = lastShownList.get(index.getZeroBased());
 
+            if (!studentToEdit.hasTutorial(tutorial)) {
+                errMsg.add("'%s' not in '%s'".formatted(studentToEdit.getName(), tutorial));
+                continue;
+            }
+
             try {
                 model.removeStudentFromTutorial(tutorial, studentToEdit);
             } catch (ItemNotFoundException e) {
-                throw new CommandException(e.getMessage());
+                errMsg.add(e.getMessage());
             }
+
+        }
+
+        if (!errMsg.isEmpty()) {
+            throw new CommandException("Warning: %s".formatted(errMsg.toString()));
         }
 
         assert model.check();

@@ -16,31 +16,14 @@ Class Tutorial
 
 
 class Student {
-    name: String
-    studentId: String
-    phone: String
-    email: String
-    handle: String
 }
 class Tutorial {
-    name: String
-}
-
-class Assignment {
-    dueDate: Datetime
 }
 
 class Attendance {
-    weekNo: int
 }
 
 class Submission
-
-enum "<<enumeration>>\nSubmissionStatus" as State {
-    SUBMITTED
-    NOT_SUBMITTED
-    GRADED
-}
 }
 
 AddressBook .up.|> ReadOnlyAddressBook
@@ -48,22 +31,18 @@ AddressBook .up.|> ReadOnlyAddressBook
 ModelManager .up.|> Model
 Model .right.> ReadOnlyUserPrefs
 Model .left.> ReadOnlyAddressBook
-ModelManager -left-> "1" AddressBook
+ModelManager -right-> "1" AddressBook
 ModelManager -right-> "1" UserPrefs
 UserPrefs .up.|> ReadOnlyUserPrefs
 
-ModelManager --> "*" Tutorial : filters >
+ModelManager -down-> "*" Tutorial : filters >
 ModelManager --> "*" Student : filters >
 ModelManager --> "*" Submission : filters >
 ModelManager --> "*" Attendance : filters >
 
-Tutorial "1" *--> "*" Assignment
+AddressBook -->  "*" Tutorial
+AddressBook -->  "*" Student
+AddressBook -->  "*" Submission
+AddressBook -->  "*" Attendance
 
-Tutorial "*" -- "*" Student
-(Tutorial, Student) .. Attendance
-
-Student "*" -right- "*" Assignment
-(Student, Assignment) .. Submission
-
-Submission --> State
 @enduml

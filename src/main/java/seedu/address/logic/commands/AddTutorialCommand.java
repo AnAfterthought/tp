@@ -19,7 +19,8 @@ public class AddTutorialCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New tutorial added: %1$s";
     public static final String MESSAGE_INVALID_NAME = """
-                    The only valid characters are: letters (A-Z, a-z), digits (0-9), underscores (_), hyphens (-)""";
+                    The only valid characters are: letters (A-Z, a-z), digits (0-9), underscores (_), hyphens (-)
+                    Length must be between 1 and 15""";
     public static final String MESSAGE_MULTIPLE_NAMES = "Only 1 tutorial can be added at a time";
     public static final String MESSAGE_DUPLICATE_TUTORIAL = "Tutorial slot already exists";
 

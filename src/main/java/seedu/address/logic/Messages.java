@@ -20,9 +20,12 @@ public class Messages {
     public static final String MESSAGE_DUPLICATE_FIELDS = "Multiple values specified for the following "
                     + "single-valued field(s): ";
     public static final String MESSAGE_INVALID_NAVIGATION_MODE = "Invalid navigation mode provided";
+    public static final String MESSAGE_INCORRECT_NAVIGATION_MODE = "Incorrect mode, correct mode is '%s',"
+                    + " switching to it now";
     public static final String MESSAGE_UNKNOWN_ERROR = "Something went wrong";
 
     public static final String MESSAGE_TUTORIAL_NOT_FOUND = "Tutorial '%s' is not found";
+    public static final String MESSAGE_TUTORIAL_INDEX_NOT_FOUND = "Tutorial index '%s' is not found";
     public static final String MESSAGE_ASSIGNMENT_NOT_FOUND = "Assignment '%s' is not found in Tutorial '%s'";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student '%s' is not found";
 

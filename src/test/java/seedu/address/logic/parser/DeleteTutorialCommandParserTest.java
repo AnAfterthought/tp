@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.AddTutorialCommand;
 import seedu.address.logic.commands.DeleteTutorialCommand;
 import seedu.address.model.tutorial.Tutorial;
 
@@ -35,13 +36,13 @@ public class DeleteTutorialCommandParserTest {
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTutorialCommand.MESSAGE_USAGE));
         // tutorial name is invalid
         assertParseFailure(parser, "Tu+or!a/",
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTutorialCommand.MESSAGE_INVALID_NAME));
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTutorialCommand.MESSAGE_INVALID_NAME));
     }
 
     @Test
     public void parse_multipleArgs_throwsParseException() {
         // multiple valid tutorial names is invalid (because of space)
         assertParseFailure(parser, "CS2103-F15 CS2103-F14",
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTutorialCommand.MESSAGE_MULTIPLE_NAMES));
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTutorialCommand.MESSAGE_INVALID_NAME));
     }
 }

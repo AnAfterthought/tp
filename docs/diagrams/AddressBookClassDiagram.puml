@@ -1,0 +1,48 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
+
+Class Tutorial
+
+class Student {
+    name: Name
+    studentId: StudentID
+    phone: Phone
+    email: Email
+    handle: TelegramHandle
+    details: Details
+}
+
+class Tutorial {
+    name: String
+}
+
+class Assignment {
+    dueDate: Datetime
+}
+
+class Attendance {
+    attendances: ArrayList<Integer>
+}
+
+class Submission
+
+enum "<<enumeration>>\nSubmissionStatus" as State {
+    SUBMITTED
+    NOT_SUBMITTED
+    GRADED
+}
+
+Tutorial "1" *--> "*" Assignment
+
+Tutorial "*" <-right- "*" Student
+Tutorial "*" -right- "*" Student
+(Tutorial, Student) .. Attendance
+
+Student "*" -- "*" Assignment
+(Student, Assignment) .. Submission
+
+Submission --> State
+@enduml

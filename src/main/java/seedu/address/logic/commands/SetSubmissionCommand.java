@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,7 +50,7 @@ public class SetSubmissionCommand extends Command {
 
         var result = new ArrayList<String>();
         var hasError = false;
-        for (var studentName : studentList) {
+        for (var studentName : new LinkedHashSet<>(studentList)) {
             try {
                 model.setSubmissionStatus(tutorialName, assignmentName, studentName, status);
             } catch (ItemNotFoundException | CommandException e) {

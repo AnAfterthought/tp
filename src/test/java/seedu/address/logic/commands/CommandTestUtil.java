@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
@@ -89,13 +90,10 @@ public class CommandTestUtil {
      */
     public static void assertCommandSuccess(Command command, Model actualModel, CommandResult expectedCommandResult,
                     Model expectedModel) {
-        try {
-            CommandResult result = command.execute(actualModel);
-            assertEquals(expectedCommandResult, result);
-            assertEquals(expectedModel, actualModel);
-        } catch (CommandException ce) {
-            throw new AssertionError("Execution of command should not fail.", ce);
-        }
+        CommandResult result = assertDoesNotThrow((
+        ) -> command.execute(actualModel));
+        assertEquals(expectedCommandResult, result);
+        assertEquals(expectedModel, actualModel);
     }
 
     /**

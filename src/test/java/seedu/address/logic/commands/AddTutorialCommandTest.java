@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -15,8 +16,12 @@ import seedu.address.testutil.TypicalAddressBook;
 
 public class AddTutorialCommandTest {
 
-    private static final Model modelStub = new ModelManager(TypicalAddressBook.getTypicalAddressBook(),
-                    new UserPrefs());
+    private static Model modelStub = new ModelManager(TypicalAddressBook.getTypicalAddressBook(), new UserPrefs());
+    @BeforeEach
+    void setUp() {
+        modelStub = new ModelManager(TypicalAddressBook.getTypicalAddressBook(), new UserPrefs());
+
+    }
 
     @Test
     public void constructor_nullTutorial_throwsNullPointerException() {

@@ -20,7 +20,7 @@ enum "<<enumeration>>\nNavigationMode" as NavigationMode {
     STUDENT
     TUTORIAL
     ATTENDANCE
-    ASSIGNMENT
+    SUBMISSION
     SINGLE_STUDENT
     UNCHANGED
 }

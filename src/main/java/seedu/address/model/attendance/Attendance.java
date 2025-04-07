@@ -38,11 +38,11 @@ public record Attendance(Tutorial tutorial, Student student,
     }
 
     public Attendance setTutorial(Tutorial t) {
-        return new Attendance(t, student, attendances);
+        return new Attendance(t, student, new ArrayList<>(attendances));
     }
 
     public Attendance setStudent(Student s) {
-        return new Attendance(tutorial, s, attendances);
+        return new Attendance(tutorial, s, new ArrayList<>(attendances));
     }
 
     /**

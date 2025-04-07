@@ -132,7 +132,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_tutorialAddCommand_success() throws ParseException {
-        var tutorialName = "Tutorial-_-Name1";
+        var tutorialName = "Tutorial-_-1234";
         var cmd = "%s %s %s".formatted(TutorialCommand.COMMAND_WORD, AddTutorialCommand.COMMAND_WORD, tutorialName);
 
         var actual = parser.parseCommand(cmd);
@@ -150,7 +150,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_tutorialDeleteCommand_success() throws ParseException {
-        var tutorialName = "Tutorial-_-Name1";
+        var tutorialName = "Tutorial-_-1234";
         var cmd = "%s %s %s".formatted(TutorialCommand.COMMAND_WORD, DeleteTutorialCommand.COMMAND_WORD, tutorialName);
 
         var actual = parser.parseCommand(cmd);

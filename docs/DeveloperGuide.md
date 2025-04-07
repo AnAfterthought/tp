@@ -3,14 +3,24 @@ layout: page
 title: Developer Guide
 ---
 
+<!-- prettier-ignore -->
 - Table of Contents
-  {:toc}
+{:toc}
 
 ---
 
 ## **Acknowledgements**
 
-- {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+TAskbook is a brownfield software project based off [AddressBook Level-3](https://github.com/se-edu/addressbook-level3),
+taken under the CS2103 Software Engineering module held by the School of Computing at the National University of Singapore.
+
+- Java Dependencies
+  - Jackson for JSON-related operations
+  - Javafx for GUI
+  - JUnit5 for testing
+- Documentation
+  - Jekyll for static site generation
+  - PlantUML for diagramming
 
 ---
 
@@ -38,7 +48,10 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes
+[`Main`](https://github.com/AY2425S2-CS2103-F15-1/tp/tree/master/src/main/java/seedu/address/Main.java)
+and [`MainApp`](https://github.com/AY2425S2-CS2103-F15-1/tp/tree/master/src/main/java/seedu/address/MainApp.java))
+is in charge of the app launch and shut down.
 
 - At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 - At shut down, it shuts down the other components and invokes cleanup methods where necessary.
@@ -71,13 +84,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2425S2-CS2103-F15-1/tp/tree/master/src/main/java/seedu/address/ui/Ui.java)
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `StudentListPanel`, `TutorialListPanel`, `AttendanceListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2425S2-CS2103-F15-1/tp/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2425S2-CS2103-F15-1/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -88,7 +101,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2425S2-CS2103-F15-1/tp/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -140,28 +153,45 @@ How the parsing works:
 
 ### Model component
 
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2425S2-CS2103-F15-1/tp/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<img src="images/ModelClassDiagram.svg" width="450" />
+<img src="images/ModelClassDiagram.svg" width="550" />
+
+(Implementation within the addressbook will be discussed in another section)
 
 The `Model` component,
 
-- stores the address book data i.e., all `Student` objects (which are contained in a `UniqueStudentList` object).
-- stores the currently 'selected' `Student` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Student>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+- stores the address book data, `Student`, `Tutorial`, `Attendance` and `Submission`.
+- stores the currently 'selected' `Student`, `Tutorial`, `Attendance` and `Submission` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Student>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 - stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
-- does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
+- does not depend on any of the other three components (as the `Model` represents data entities of the domain,
+  they should make sense on their own without depending on other components)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Student` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Student` needing their own `Tag` objects.<br>
+#### AddressBook Component
 
-<img src="images/BetterModelClassDiagram.png" width="450" />
+The above diagram shows how the `AddressBook` class, and `ModelManager` classes interact with
+the `Tutorial`, `Student`, `Attendance` and `Submission` class.
+This section will describe the interaction between these classes.
 
-</div>
+<img src="images/AddressBookClassDiagram.svg" width="450" />
+
+In the `AddressBook` class,
+between each `(Student, Tutorial)` Pair,
+there is one `Attendance` object.
+Each `Attendance` object stores an array of integers,
+where the `i`th index represents the `i`'th lesson,
+and the value in the `i`th index could be 0 or 1,
+representing whether the student was present during that lesson.
+Between each `(Assignment, Student)` pair,
+there is a `Submission` object.
+In each `Submission` object is an enum that represents the submission status of that assignment,
+for a particular student.
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2425S2-CS2103-F15-1/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
-<img src="images/StorageClassDiagram.png" width="550" />
+<img src="images/StorageClassDiagram.png" width="800" />
 
 The `Storage` component,
 
@@ -189,101 +219,6 @@ for executing the 3 key commands for functionalities related to students in TAsk
 #### `delete` Command
 
 ![Interactions Inside the Logic and Model Component for the `delete` Command](images/student-related/DeleteStudentSequenceDiagram.svg)
-
----
-
-## **Implementation**
-
-This section describes some noteworthy details on how certain features are implemented.
-
-### \[Proposed\] Undo/redo feature
-
-#### Proposed Implementation
-
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
-
-- `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-- `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-- `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
-
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
-
-![UndoRedoState0](images/UndoRedoState0.png)
-
-Step 2. The user executes `delete 5` command to delete the 5th student in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
-
-![UndoRedoState1](images/UndoRedoState1.png)
-
-Step 3. The user executes `add n/David …​` to add a new student. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
-
-![UndoRedoState2](images/UndoRedoState2.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
-
-</div>
-
-Step 4. The user now decides that adding the student was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
-
-![UndoRedoState3](images/UndoRedoState3.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</div>
-
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
-
-![UndoSequenceDiagram](images/UndoSequenceDiagram-Logic.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</div>
-
-Similarly, how an undo operation goes through the `Model` component is shown below:
-
-![UndoSequenceDiagram](images/UndoSequenceDiagram-Model.png)
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</div>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-![UndoRedoState4](images/UndoRedoState4.png)
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-![UndoRedoState5](images/UndoRedoState5.png)
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<img src="images/CommitActivityDiagram.png" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-- **Alternative 1 (current choice):** Saves the entire address book.
-
-  - Pros: Easy to implement.
-  - Cons: May have performance issues in terms of memory usage.
-
-- **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  - Pros: Will use less memory (e.g. for `delete`, just save the student being deleted).
-  - Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
 
 ---
 
@@ -319,31 +254,37 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ### **User Stories**
 
-| Priority | As a … | I want to …                                                       | So that I can …                                                                            | Accepted? |
-| -------- | ------ | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | --------- |
-| High     | TA     | Save a student's data                                             | Find their details to contact them if needed                                               | No        |
-| High     | TA     | View a list of all students                                       | See all students I have created                                                            | No        |
-| Medium   | TA     | Search for contacts using name, student ID, or email              | Locate students efficiently                                                                | No        |
-| Medium   | TA     | Add notes to each contact                                         | Track important details like consultation requests, special accommodations, and weaknesses | No        |
-| Medium   | TA     | View the student's data in tabular form                           | See how the class is doing in general                                                      | No        |
-| Medium   | TA     | Access the contact details of my students                         | Message them                                                                               | No        |
-| High     | TA     | Create tutorial slots                                             | Manage the lesson format for the students                                                  | No        |
-| High     | TA     | Add students to groups                                            | Manage them on a group level                                                               | No        |
-| High     | TA     | Create an assignment entry with a deadline                        | Track student submissions                                                                  | No        |
-| Medium   | TA     | Track whether a student has submitted an assignment               | Monitor completion rates                                                                   | No        |
-| Medium   | TA     | See submission rates                                              | Assess overall assignment difficulty                                                       | No        |
-| Medium   | TA     | Mark my student as present/unpresent for a specific tutorial slot | Track their attendance                                                                     | No        |
-| Medium   | TA     | View the overall performance of my students                       | Identify if my class is performing well overall                                            | No        |
-| High     | TA     | Delete tutorial groups                                            | Remove outdated groups                                                                     | No        |
-| High     | TA     | Delete a student's data                                           | Make space for the next semester's class                                                   | No        |
+| Priority | As a … | I want to …                                                      | So that I can …                                                                            | Accepted? |
+| -------- | ------ | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | --------- |
+| High     | TA     | Add a student's data                                             | Find their details to contact them if needed                                               | Yes       |
+| High     | TA     | View a list of all students                                      | See all students I have created                                                            | Yes       |
+| High     | TA     | Delete a student's data                                          | Make space for the next semester's class                                                   | Yes       |
+| Medium   | TA     | Edit a student's data                                            | Make changes to students without deleting and adding them again                            | Yes       |
+| Medium   | TA     | Search for student's data entry using name                       | Locate students efficiently                                                                | Yes       |
+| Medium   | TA     | Add notes to each student                                        | Track important details like consultation requests, special accommodations, and weaknesses | Yes       |
+| Medium   | TA     | View the student's data in detail                                | See more information about the student                                                     | Yes       |
+| High     | TA     | Create tutorials                                                 | Manage the tutorial groups I am in charge of                                               | Yes       |
+| High     | TA     | View a list of all tutorials                                     | See all tutorials I have created                                                           | Yes       |
+| High     | TA     | Delete tutorials                                                 | Remove outdated groups                                                                     | Yes       |
+| High     | TA     | Add students to tutorials                                        | Manage them on a tutorial group level                                                      | Yes       |
+| High     | TA     | Delete students from tutorials                                   | Remove them or reassign them to the appropriate tutorials                                  | Yes       |
+| Medium   | TA     | Search for tutorial's data entry using name                      | Locate tutorials efficiently                                                               | Yes       |
+| High     | TA     | Create an assignment entry with a deadline                       | Track assignments to a tutorial                                                            | Yes       |
+| High     | TA     | Delete an assignment entry                                       | Remove assignments or reassign assignments to appropriate tutorials                        | Yes       |
+| Medium   | TA     | Set the submission state for an assignment for specific students | Track which students have completed which assignments                                      | Yes       |
+| Medium   | TA     | View assignment submissions across students and tutorials        | Monitor completion rates                                                                   | Yes       |
+| High     | TA     | Mark and unmark my students' attendances for any of the weeks    | Track their attendance                                                                     | Yes       |
+| High     | TA     | List attendance records for students across tutorials            | Review past attendance to tutorials                                                        | Yes       |
+| Medium   | TA     | Export a list of all students or students in a specific tutorial | Keep records of students or share information with professors                              | Yes       |
+| Medium   | TA     | Export a list of all tutorials                                   | Have an organized record of tutorial groups                                                | Yes       |
 
 ## **Use cases**
 
-(For all use cases below, the **System** is the `Taskbook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `TAskbook` and the **Actor** is the `user`, unless specified otherwise)
 
-#### Use case: Add student
+#### Use case: UC01 - Add student
 
-**System**: Taskbook
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
@@ -360,30 +301,51 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Delete student
+#### Use case: UC02 - Edit student
 
-**System**: Taskbook
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
 
 1. User requests to list students
 2. System shows a list of students
-3. User requests to delete a specific student in the list
+3. User sends request to edit a specific student index in the list with details to edit
+4. System edits a new user
+5. Use case ends
+
+**Extensions**
+
+- 3a. If input is erroneous or user does not exist
+  - 3a1. System displays an error message
+  - 3a2. Use case resumes at step 3
+
+---
+
+#### Use case: UC03 - Delete student
+
+**System**: TAskbook <br>
+**Actor**: User
+
+**MSS**
+
+1. User requests to list students
+2. System shows a list of students
+3. User requests to delete a specific student index in the list
 4. System deletes the student
 5. Use case ends
 
 **Extensions**
 
-- 2a. If the given index is invalid
-  - 2a1. System shows an error message
-  - 2a2. Use case resumes at step 1
+- 3a. If the given index is invalid
+  - 3a1. System shows an error message
+  - 3a2. Use case resumes at step 1
 
 ---
 
-#### Use case: List students
+#### Use case: UC04 - List students
 
-**System**: Taskbook
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
@@ -400,9 +362,70 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: List tutorial slots
+#### Use case: UC05 - Find students
 
-**System**: Taskbook
+**System**: TAskbook <br>
+**Actor**: User
+
+**MSS**
+
+1. User sends search request for students by name with or without a specific tutorial
+2. System lists all students matching the request
+3. Use case ends
+
+**Extensions**
+
+- 2a. If there are no students
+  - 2a1. System doesn't display anything
+  - 2a2. Use case ends
+
+---
+
+#### Use case: UC06 - Search for students
+
+**System**: TAskbook <br>
+**Actor**: User
+
+**MSS**
+
+1. User requests to search for a student
+2. System prompts for search criteria
+3. User enters the search criteria
+4. System displays a list of students matching the search criteria
+5. Use case ends
+
+**Extensions**
+
+- 3a. If no students match the search criteria
+  - 3a1. System displays a message indicating no results found
+  - 3a2. Use case ends
+
+---
+
+#### Use case: UC07 - View student
+
+**System**: TAskbook <br>
+**Actor**: User
+
+**MSS**
+
+1. User requests to list students
+2. System shows a list of students
+3. User requests to see a specific student's details based on student index
+4. System displays specified student's details (including unlisted details like description).
+5. Use case ends
+
+**Extensions**
+
+- 3a. If the given index is invalid
+  - 3a1. System shows an error message
+  - 3a2. Use case resumes at step 1
+
+---
+
+#### Use case: UC08 - List tutorial slots
+
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
@@ -419,9 +442,9 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Create a tutorial slot
+#### Use case: UC09 - Create a tutorial slot
 
-**System**: Taskbook
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
@@ -441,9 +464,9 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Delete a tutorial slot
+#### Use case: UC10 - Delete a tutorial slot
 
-**System**: Taskbook
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
@@ -463,9 +486,9 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Add student to tutorial slot
+#### Use case: UC11 - Add student to tutorial slot
 
-**System**: Taskbook
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
@@ -487,9 +510,9 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Delete student from tutorial slot
+#### Use case: UC12 - Delete student from tutorial slot
 
-**System**: Taskbook
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
@@ -514,28 +537,9 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Retrieve and Save to file
+#### Use case: UC13 - Search for students
 
-**System**: Taskbook
-**Actor**: User
-
-**MSS**
-
-1. User requests to save the current data to a file
-2. System saves the data to a file
-3. Use case ends
-
-**Extensions**
-
-- 2a. If there is an error during the save process
-  - 2a1. System displays an error message
-  - 2a2. Use case ends
-
----
-
-#### Use case: Search for students
-
-**System**: Taskbook
+**System**: Taskbook<br>
 **Actor**: User
 
 **MSS**
@@ -554,47 +558,48 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Create a lesson under tutorial slot for each student
+#### Use case: UC14 - List attendances
 
-**System**: Taskbook
+**System**: Taskbook<br>
 **Actor**: User
 
 **MSS**
 
-1. User lists all tutorial slots
-2. System lists all tutorial slots
-3. User selects a tutorial slot and requests to create a lesson
-4. System creates a lesson for each student in the selected tutorial slot
-5. Use case ends
+1. User requests to list attendances
+2. System lists all attendances
+3. Use case ends
 
 **Extensions**
 
-- 2a. If no tutorial slots are available
-  - 2a1. System displays a message indicating no available slots
+- 2a. If there are no attendance records
+  - 2a1. System doesn't display anything
   - 2a2. Use case ends
-- 4a. If there is an error creating a lesson for any student
-  - 4a1. System displays an error message for the affected student
-  - 4a2. Use case continues at step 4 for remaining students
+- 2b. If an index is specified when student list is displayed
+  - 2b1. System displays the attendance of the student at specified index
+  - 2b2. Use case ends
+- 2c. If an index is specified when tutorial list is displayed
+  - 2c1. System displays the attendance of the tutorial at specified index
+  - 2c2. Use case ends
 
 ---
 
-#### Use case: Mark lesson attendance
+#### Use case: UC15 - Mark attendance
 
-**System**: Taskbook
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
 
-1. User lists all students in a tutorial slot
-2. System lists all students in the selected tutorial slot
+1. User requests for a list of attendances
+2. System lists attendances
 3. User marks attendance for each student
 4. System updates attendance status for each student
 5. Use case ends
 
 **Extensions**
 
-- 2a. If no students are listed in the tutorial slot
-  - 2a1. System displays a message indicating no students in the slot
+- 2a. If there are no attendance records
+  - 2a1. System doesn't display anything
   - 2a2. Use case ends
 - 3a. If attendance cannot be marked for a student
   - 3a1. System displays an error message for the affected student
@@ -602,114 +607,134 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ---
 
-#### Use case: Delete a lesson under tutorial slot for each student
+#### Use case: UC16 - Unmark attendance
 
-**System**: Taskbook
+**System**: TAskbook <br>
 **Actor**: User
 
 **MSS**
 
-1. User lists all lessons for a tutorial slot
-2. System lists all lessons for the selected tutorial slot
-3. User selects the lesson to be deleted
-4. System deletes the selected lesson for each student in the tutorial slot
+1. User requests for a list of attendances
+2. System lists attendances
+3. User unmarks attendance for each student
+4. System updates attendance status for each student
 5. Use case ends
 
 **Extensions**
 
-- 2a. If no lessons exist in the selected tutorial slot
-  - 2a1. System displays a message indicating no lessons found
+- 2a. If there are no attendance records
+  - 2a1. System doesn't display anything
   - 2a2. Use case ends
-- 4a. If there is an error deleting a lesson for any student
-  - 4a1. System displays an error message for the affected student
-  - 4a2. Use case continues at step 4 for remaining students
+- 3a. If attendance cannot be unmarked for a student
+  - 3a1. System displays an error message for the affected student
+  - 3a2. Use case continues at step 3 for remaining students
 
 ---
 
-#### Use case: View overall attendance
+#### Use case: UC17 - Add assignment
 
-**System**: Taskbook
+**System**: Taskbook<br>
 **Actor**: User
 
 **MSS**
 
-1. User requests to view overall attendance
-2. System displays a summary of overall attendance
-3. Use case ends
+1. User requests for a list of tutorials
+2. System lists tutorials
+3. User requests to add assignment to specified tutorials
+4. System adds assignment to specified tutorials
+5. Use case ends
 
 **Extensions**
 
-- 2a. If there is no attendance data available
-  - 2a1. System displays a message indicating no attendance data
+- 2a. If there are no tutorials
+  - 2a1. System doesn't display anything
   - 2a2. Use case ends
+- 3a. If user specifies an invalid tutorial index
+  - 3a1. System adds assignment to valid tutorials preceding the first invalid index
+  - 3a2. System displays an error message
+  - 3a3. Use case continues at step 3
 
 ---
 
-#### Use case: Export student contact list
+#### Use case: UC18 - Delete assignment
 
-**System**: Taskbook
+**System**: Taskbook<br>
 **Actor**: User
 
 **MSS**
 
-1. User requests to export the student contact list
-2. System exports the contact list to a file
+1. User requests for a list of tutorials
+2. System lists tutorials
+3. User requests to delete assignment from specified tutorials
+4. System deletes assignment from specified tutorials
+5. Use case ends
+
+**Extensions**
+
+- 2a. If there are no tutorials
+  - 2a1. System doesn't display anything
+  - 2a2. Use case ends
+- 3a. If user specifies an invalid tutorial index
+  - 3a1. System deletes assignment from valid tutorials preceding the first invalid index
+  - 3a2. System displays an error message
+  - 3a3. Use case continues at step 3
+
+---
+
+#### Use case: UC19 - Set submission
+
+**System**: TAskbook <br>
+**Actor**: User
+
+**MSS**
+
+1. User requests to set submission state of students for a specified assignment
+2. System updates submission states accordingly
 3. Use case ends
 
 **Extensions**
+
+- 1a. If there is an error in the command
+  - 1a1. System displays an error message
+  - 1a2. Use case continues at step 1
+
+#### Use case: UC20 - Export data
+
+**System**: TAskbook <br>
+**Actor**: User
+
+**MSS**
+
+1. User specifies an export option (all students, students in a tutorial, tutorials)
+2. System generates and provides the export file
+3. Use case ends
+
+**Extensions**
+
+- 2a. If there is an error in the export command
+
+  - 2a1. System displays an error message
+  - 2a2. Use case ends
 
 - 2a. If there is an error during the export process
   - 2a1. System displays an error message
   - 2a2. Use case ends
 
----
-
-#### Use case: Make announcements to students through email
-
-**System**: Taskbook
-**Actor**: User
-
-**MSS**
-
-1. User selects students to receive an announcement
-2. System prompts for the email content
-3. User enters the announcement content
-4. System sends the email announcement to selected students
-5. Use case ends
-
-**Extensions**
-
-- 2a. If no students are selected
-  - 2a1. System displays a message indicating no students selected
-  - 2a2. Use case ends
-- 4a. If there is an error sending the email
-  - 4a1. System displays an error message
-  - 4a2. Use case ends
-
 ### Non-Functional Requirements
 
-1.  The system should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  The system should be able to hold up to 1000 students without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-4.  The system should respond within 2 seconds.
-5.  The system should only be for a single user.
-6.  The system's data should be stored locally.
-7.  The system should work without requiring an installer.
-8.  The system should not require a remote server.
-9.  The system's GUI should work well for standard screen resolutions 1920x1080 and higher.
-10. The system should be easy to use for a user who has no experience using an address book software.
-11. The system should not interfere with other software.
-12. The system should save data automatically after each modification in the address book.
-13. The system's saved data should still be accessible even if it crashes.
-14. The system should not require a database management system for storing data.
-15. The system should be able to handle invalid commands without crashing.
-16. The system's features should be easy to test.
-17. The system's commands should not cause confusion (i.e. not ambiguous).
-18. The system should be at most 100MB in size.
-19. The system should only require one JAR file.
-20. A user who has not used the software for a while should be able to use it efficiently immediately after returning to it.
-21. The User Guide and Developer Guide should be PDF-friendly.
-22. The system should be able to read a save file provided it is in the correct path and has the correct name.
+1. The system should work on any _mainstream OS_ as long as it has Java `17` or above installed.
+1. The system should be able to hold up to 1000 students without a noticeable sluggishness in performance for typical usage.
+1. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+1. The system should respond within 2 seconds.
+1. The system should only be for a single user.
+1. The system's data should be stored locally.
+1. The system should work without requiring an installer.
+1. The system should not require a remote server.
+1. The system should save data automatically after each modification in the address book.
+1. The system should not require a database management system for storing data.
+1. The system should be able to handle invalid commands without crashing.
+1. The system should be at most 100MB in size.
+1. The system should only require one JAR file.
 
 ### Glossary
 
@@ -789,132 +814,306 @@ testers are expected to do more *exploratory* testing.
 
    1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-1. Saving window preferences
-
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
-
-   1. Re-launch the app by double-clicking the jar file.<br>
-      Expected: The most recent window size and location is retained.
-
-1. _{ more test cases …​ }_
-
 ### Adding a student
 
 1. Adding a student
 
    1. Prerequisites: None.
-   1. Test case: `add John Doe`<br>
-      Expected: A new student named "John Doe" is added to the student list. A success message confirming the addition is displayed.
+
+   <!-- Success case -->
+   <!-- 1. Test case: `add John Doe`<br> -->
+   <!--    Expected: A new student named "John Doe" is added to the student list. -->
+   <!--    A success message confirming the addition is displayed. -->
 
    1. Test case: `add`<br>
-      Expected: Error message indicating that student details are incomplete. The system should ask for both first name and last name.
+      Expected: Shows the usage of the command.
 
    1. Test case: `add 12345`<br>
-      Expected: Error message indicating that the student name is invalid (numeric values are not allowed).
+      Expected: Shows the usage of the command
 
 ### Listing all students
 
 1. Listing all students
 
-   1. Prerequisites: At least one student should be added to the list (e.g., `add John Doe`).
+   1. Prerequisites: At least one student should be added to the list.
+
    1. Test case: `list`<br>
       Expected: A list of all students in the system is displayed.
 
+1. Listing all students when there are no students in the addressbook
+
+   1. Prerequisites: There should be no student in the address book
+
    1. Test case: `list` with no students<br>
-      Expected: A message saying "No students available" is displayed if the list is empty.
+      Expected: An empty list will be shown.
 
 ### Deleting a student
 
-1. Deleting a student while all students are being shown
+1. Deleting a student in `STUDENTS` view
 
-   1. Prerequisites: List all students using the `list` command. There must be multiple students in the list (e.g., `add John Doe` and `add Jane Doe`).
+   1. Prerequisites: List all students using the `list` command.
+      There must at least one student in the list.
+
    1. Test case: `delete 1`<br>
-      Expected: The student with ID 1 (John Doe) is deleted from the list. A success message with the student details is shown.
+      Expected: The student with index 1 is deleted from the list.
+      A success message with the student details is shown.
 
    1. Test case: `delete 0`<br>
-      Expected: No student is deleted. An error message is shown indicating that the student ID 0 is invalid.
+      Expected: No student is deleted.
+      An error message is shown indicating that the index 0 is invalid.
 
-   1. Test case: `delete x` (where x is larger than the list size)<br>
-      Expected: Error message indicating that the student ID `x` does not exist.
+   1. Test case: `delete 999` (where x is larger than the list size)<br>
+      Expected: Error message indicating that index is invalid.
+
+1. Deleting a student in `SUBMISSION`, `ATTENDANCE`, or `TUTORIAL` view
+
+   1. Test case: `delete 0`<br>
+      Expected: Error message saying the command format is invalid.
+
+   1. Test case: `delete 1`<br>
+      Expected: Error message saying view is wrong,
+      and switching to the correct view.
+
+### Listing tutorial slots
+
+1. Listing tutorial slots
+
+   1. Prerequisites: At least one tutorial slot should exist.
+      `tutorial add cs2103-f15` to add a tutorial slot.
+
+   1. Test case: `tutorial list`<br>
+      Expected: A list of all tutorial slots is displayed.
+
+1. Listing tutorial slots with no tutorials in the address book
+
+   1. Test case: `tutorial list` with no tutorial slots<br>
+      Expected: An empty list of tutorial slots.
 
 ### Adding a tutorial slot
 
 1. Adding a tutorial slot
 
    1. Prerequisites: None.
-   1. Test case: `tutorial add cs2103-f15`<br>
-      Expected: A new tutorial slot `cs2103-f15` is added. The list of tutorial slots is updated and the new slot appears at the bottom of the list. A success message is displayed confirming the addition.
+
+   1. Test case: `tutorial add CS2103-_-f15`<br>
+      Expected: A new tutorial slot is added.
 
    1. Test case: `tutorial add cs2103+f15`<br>
-      Expected: Error message indicating that the slot name contains invalid characters (e.g., "+" is not allowed).
+      Expected: Error message showing the list of valid characters
 
-### Creating a tutorial slot with a duplicate name
+   1. Test case: `tutorial add cs2103 f15`<br>
+      Expected: Error message showing the list of valid characters
 
-1. Prerequisites: Tutorial list should already contain a slot named `cs2103-f15`. If not, create it using `tutorial add cs2103-f15`.
-   1. Test case: `tutorial add cs2103-f15`<br>
-      Expected: Error message indicating that a tutorial slot with the name `cs2103-f15` already exists.
+1. Adding a tutorial slot with a duplicate name
 
-### Adding students to tutorial group slots
+   1. Prerequisites: Tutorial list should already contain a slot named `cs2103-f15`.
+      If not, create it using `tutorial add cs2103-f15`.
 
-1. Adding students to a tutorial group slot
+      1. Test case: `tutorial add cs2103-f15`<br>
+         Expected: Error message indicating that a tutorial slot already exists.
 
-   1. Prerequisites: A tutorial slot should already exist (e.g., `tutorial add cs2103-f15`) and at least one student should be in the system (e.g., `add John Doe`).
-   1. Test case: `addToSlot cs2103-f15 1`<br>
-      Expected: Student with ID 1 (John Doe) is added to the "cs2103-f15" tutorial slot. A success message is displayed confirming the addition.
+### Adding students to tutorial slot
 
-   1. Test case: `addToSlot cs2103-f15`<br>
-      Expected: Error message indicating that the student ID is missing. The system should prompt for a student ID.
+1. Adding students to a tutorial slot in `STUDENT` view
 
-   1. Test case: `addToSlot cs9999-f15 1`<br>
-      Expected: Error message indicating that the tutorial slot `cs9999-f15` does not exist.
+   1. Prerequisites: There should be at least 1 student
+      and 1 tutorial slot (e.g. `cs2103-f15`).
+      List all students with the `list` command.
+
+   1. Test case: `tutorial add-student cs2103-f15 s/1`<br>
+      Expected: Student at index 1 is added to the "cs2103-f15" tutorial slot.
+      A success message is displayed confirming the addition.
+
+   1. Test case: `tutorial add-student cs2103-f15`<br>
+      Expected: Error message that shows the command usage.
+
+   1. Test case: `tutorial add-student cs9999-f15 s/1`<br>
+      Expected: Error message indicating that the tutorial slot cannot be found.
+
+1. Adding students to a tutorial slot in `SUBMISSION`, `ATTENDANCE`, or `TUTORIAL` view
+
+   1. Prerequisite: Be in some other view
+
+   1. Test case: `tutorial add-student cs2103-f15 s/1`<br>
+      Expected: Error messaging saying the view is incorrect,
+      and switching to the correct view.
 
 ### Deleting a student from a tutorial slot
 
-1. Deleting a student from a tutorial group slot
+1. Deleting a student from a tutorial slot in `STUDENT` view
 
-   1. Prerequisites: A tutorial slot should already have at least one student (e.g., `addToSlot cs2103-f15 1`).
-   1. Test case: `deleteFromSlot cs2103-f15 1`<br>
-      Expected: Student with ID 1 (John Doe) is removed from the "cs2103-f15" tutorial slot. A success message confirming the removal is shown.
+   1. Prerequisites: A tutorial slot should already have at least one student.
+      Type `list` to list all the students.
+      In our example, we assume the tutorial name is `cs2103-f15`,
+      and the student at index 1 of the `STUDENT` view is in tutorial `cs2103-f15`.
 
-   1. Test case: `deleteFromSlot cs2103-f15`<br>
-      Expected: Error message indicating that the student ID is missing. The system should prompt for a student ID.
+   1. Test case: `tutorial delete-student cs2103-f15 s/1`<br>
+      Expected: Student at index 1 is removed from the "cs2103-f15" tutorial slot.
+      A success message confirming the removal is shown.
 
-   1. Test case: `deleteFromSlot cs9999-f15 1`<br>
-      Expected: Error message indicating that the tutorial slot `cs9999-f15` does not exist.
+   1. Test case: `tutorial delete-student cs2103-f15`<br>
+      Expected: Error message indicating invalid command format.
+      It also shows the usage of the command.
 
-### Deleting tutorial group slots
+   1. Test case: `tutorial delete-student cs9999-f15 s/1`<br>
+      Expected: Error message indicating that the tutorial slot is not found.
+
+### Deleting a tutorial slot
 
 1. Deleting a tutorial slot
 
-   1. Prerequisites: At least one tutorial slot should exist (e.g., `tutorial add cs2103-f15`).
+   1. Prerequisites: At least one tutorial slot should exist.
+      `tutorial add cs2103-f15` to create a new tutorial slot if it doesn't already exist.
+
    1. Test case: `tutorial delete cs2103-f15`<br>
       Expected: The tutorial slot `cs2103-f15` is deleted from the system. A success message confirming the deletion is shown.
 
    1. Test case: `tutorial delete cs9999-f15`<br>
-      Expected: Error message indicating that the tutorial slot `cs9999-f15` does not exist.
+      Expected: Error message indicating that the tutorial slot does not exist.
 
-### Listing tutorial slots
+### Adding an assignment
 
-1. Listing tutorial slots
+1. Adding an assignment in `TUTORIAL` view
 
-   1. Prerequisites: At least one tutorial slot should exist (e.g., `tutorial add cs2103-f15`).
-   1. Test case: `tutorial list`<br>
-      Expected: A list of all tutorial slots is displayed.
+   1. Prerequisite: Be in `TUTORIAL` view.
+      Have at least 1 tutorial.
 
-   1. Test case: `tutorial list` with no tutorial slots<br>
-      Expected: Message indicating that no tutorial slots are available.
+   1. Test case: `assignment add assign1 t/1`<br>
+      Expected: Successful addition of assignment.
+
+   1. Test case: `assignment add assign2 t/1 d/2025-04-03 0800`<br>
+      Expected: Successful addition of assignment.
+
+   1. Test case: `assignment add assign3 t/1 d/2025-4-3 0800`<br>
+      Expected: Error messaging saying unknown date format.
+
+### Deleting an assignment
+
+1. Deleting an assignment
+
+   1. Prerequisite: Be in `TUTORIAL` view.<br>
+      Have at least 1 tutorial slot with 1 assignment called "assign1".
+
+   1. Test case: `assignment delete assign1 t/1`<br>
+      Expected: Assignment successfully deleted.
+
+   1. Test case: `assignment delete lab 1 t/1`<br>
+      Expected: Error message saying cannot find assignment.
+
+### Listing submissions
+
+1. Listing submissions
+
+   1. Test case: `submission list`
+      Expected: List of all submissions
+
+### Set submission status
+
+1. Setting submission status
+
+   1. Prerequisite: A student with name "Alex", a tutorial called "cs2103-f15",
+      and assignment called `pe` under `cs2103-f15`.
+
+   1. Test case: `submission set submitted t/cs2103-f15 a/pe s/Alex`<br>
+      Expected: Submission updated successfully.
+
+### Listing attendances
+
+1. Listing attendances
+
+   1. Prerequisites: At least one student should be allocated to a tutorial.
+
+   1. Test case: `list`, `attendance list 1`<br>
+      Expected: Attendance of student with index 1 is successfully displayed
+
+   1. Test case: `tutorial list`, `attendance list 1`<br>
+      Expected: Attendance of tutorial with index 1 is displayed.
+
+   1. Test case: `attendance list`<br>
+      Expected: All attendances are displayed.
+
+   1. Test case: `attendance list abc`<br>
+      Expected: All attendances are displayed.
+
+### Marking attendance
+
+1. Marking attendance for a lesson
+
+   1. Prerequisites: At least one student should be allocated to a tutorial.
+
+   1. Test case: `list`, `attendance mark w/3 i/1`<br>
+      Expected: All attendances are displayed.
+      An error message is displayed indicating that the wrong view was used.
+
+   1. Test case: `attendance list`, `attendance mark w/3 i/1`<br>
+      Expected: Week 3 of student with index 1 is marked as present.
+
+   1. Test case: `attendance list`, `attendance mark w/-1 i/1`<br>
+      Expected: Error message indicating that the specified week is invalid.
+
+   1. Test case: `attendance list`, `attendance mark w/3 i/a`<br>
+      Expected: Error message indicating that the specified index is invalid.
+
+### Unmarking attendance
+
+1. Unmarking attendance for a lesson
+
+   1. Prerequisites: At least one student should be allocated to a tutorial.
+      At least one week is marked.
+
+   1. Test case: `list`, `attendance unmark w/3 i/1`<br>
+      Expected: Attendance of all students are displayed.
+      An error message is displayed indicating that the wrong view was used.
+
+   1. Test case: `attendance list`, `attendance unmark w/3 i/1`<br>
+      Expected: Week 3 of student with index 1 is unmarked.
+
+   1. Test case: `attendance list`, `attendance unmark w/-1 i/1`<br>
+      Expected: Error message indicating that the specified week is invalid.
+
+   1. Test case: `attendance list`, `attendance unmark w/3 i/a`<br>
+      Expected: Error message indicating that the specified index is invalid.
+
+### Searching for students
+
+1. Searching for a student
+
+   1. Prerequisites: At least one student must be added.
+
+   1. Test case: `find John`<br>
+      Expected: A list of students whose name contains "John" is displayed (e.g., "John Doe").
+
+   1. Test case: `find abc`<br>
+      Expected: Message indicating that no students were found matching the search term.
+
+### Exporting student contact list
+
+1. Exporting contact list
+
+   1. Prerequisites: At least one student should be added.
+
+   1. Test case: `export`<br>
+      Expected: The student contact list is exported successfully. A success message is shown.
+
+   1. Test case: `export students` with invalid file path<br>
+      Expected: Error message indicating invalid file path.
+
+   1. Test case: `export tutorials` with invalid file path<br>
+      Expected: Error message indicating invalid file path.
 
 ### Retrieve and Save to file
 
 1. Saving data automatically
 
    1. Prerequisites: Data must exist (e.g., at least one student or tutorial slot).
+
    1. Test case: System automatically saves data when changes are made (e.g., adding or deleting a student).
       Expected: Data is automatically saved to the file. No additional user action is needed. There should be no error message unless there's an issue.
 
 1. Retrieving data from the file
 
    1. Prerequisites: A valid file with data exists (e.g., after a previous session or when data was previously saved).
+
    1. Test case: Upon starting the application, the system automatically loads the data from the saved file.
       Expected: Data from the saved file should be loaded correctly. All students, tutorial slots, and other saved information should be available without any errors.
 
@@ -940,82 +1139,50 @@ testers are expected to do more *exploratory* testing.
    1. Test case: Attempt to retrieve data when the system’s storage is full or unavailable.
       Expected: The system should display an error message indicating that the system cannot access or load data due to a storage issue. The user should be prompted to free up space or resolve the issue.
 
-### Searching for students
+## **Appendix: Planned Enhancements**
 
-1. Searching for a student
+Team size: 6 (maximum 12 enhancements)
 
-   1. Prerequisites: At least one student must be added (e.g., `add John Doe`).
-   1. Test case: `search John`<br>
-      Expected: A list of students whose name contains "John" is displayed (e.g., "John Doe").
+1. Tutorial-Submission Synchronization:  
+   Automatically update submission records when students are added/removed from tutorials using t/ tag in add/edit commands.  
+   _Example_: edit 1 t/CS2103_T01 will now sync all CS2103_T01 submissions.
 
-   1. Test case: `search abc`<br>
-      Expected: Message indicating that no students were found matching the search term.
+2. Persistent Description Field:  
+   Save student descriptions between sessions in the data file.  
+   _Implementation_: New "description" field in student JSON structure.
 
-### Creating a lesson under tutorial slot for each student
+3. Export Completeness:  
+   Include full submission histories and attendance records in exports.  
+   _New Files_:
 
-1. Creating a lesson
+- submissions.csv (all submission states with timestamps)
+- attendance.csv (weekly records per student-tutorial pair)
 
-   1. Prerequisites: A tutorial slot must exist (e.g., `tutorial add cs2103-f15`).
-   1. Test case: `createLesson cs2103-f15`<br>
-      Expected: A lesson is created for the `cs2103-f15` tutorial slot. A success message is displayed confirming the creation.
+4. Enhanced Error Messages:  
+   Specific warnings for:
 
-   1. Test case: `createLesson cs9999-f15`<br>
-      Expected: Error message indicating that the tutorial slot does not exist.
+- Invalid parameters (show expected format)
+- Duplicate tutorial additions ("Tutorial already exists: CS2103*T01")  
+  \_Example*: tutorial add CS2103_T01 → "Operation failed: Tutorial already exists"
 
-### Marking lesson attendance
+5. Window Auto-Resizing:  
+   Dynamic UI adjustment for long content (names, descriptions, assignments).  
+   _Thresholds_:
 
-1. Marking attendance for a lesson
+- Auto-expand for >15 character assignments
+- Scrollable panels for >30 character descriptions
 
-   1. Prerequisites: A lesson must exist (e.g., `createLesson cs2103-f15`), and a student must be enrolled in the tutorial slot.
-   1. Test case: `markAttendance cs2103-f15 1 present`<br>
-      Expected: Student with ID 1 (John Doe) is marked as present. A success message is displayed.
+6. Data Preloading:  
+   Load student data on application startup instead of first list command.
 
-   1. Test case: `markAttendance cs2103-f15 1 absent`<br>
-      Expected: Student with ID 1 (John Doe) is marked as absent. A success message is displayed.
+7. Session State Preservation:  
+   Maintain temporary data between app restarts:
 
-   1. Test case: `markAttendance cs9999-f15 1 present`<br>
-      Expected: Error message indicating that the tutorial slot does not exist.
+- Active filters
+- Description edits
+- Current view preferences  
+  _Storage_: New session.json file in data directory.
 
-### Deleting a lesson under tutorial slot for each student
-
-1. Deleting a lesson
-
-   1. Prerequisites: A lesson must exist (e.g., `createLesson cs2103-f15`).
-   1. Test case: `deleteLesson cs2103-f15`<br>
-      Expected: The lesson for the `cs2103-f15` tutorial slot is deleted. A success message confirming the deletion is shown.
-
-   1. Test case: `deleteLesson cs9999-f15`<br>
-      Expected: Error message indicating that the tutorial slot does not exist.
-
-### Viewing overall attendance
-
-1. Viewing overall attendance
-
-   1. Prerequisites: At least one lesson should have attendance data (e.g., `markAttendance cs2103-f15 1 present`).
-   1. Test case: `viewAttendance`<br>
-      Expected: A summary of the overall attendance for all students is displayed.
-
-   1. Test case: `viewAttendance` with no attendance data<br>
-      Expected: Message indicating that no attendance data is available.
-
-### Exporting student contact list
-
-1. Exporting contact list
-
-   1. Prerequisites: At least one student should be added (e.g., `add John Doe`).
-   1. Test case: `exportContacts`<br>
-      Expected: The student contact list is exported successfully. A success message is shown.
-
-   1. Test case: `exportContacts` with invalid file path<br>
-      Expected: Error message indicating invalid file path.
-
-### Making announcements to students through email
-
-1. Making an announcement
-
-   1. Prerequisites: At least one student should have an email address in the system (e.g., `add John Doe` with email).
-   1. Test case: `announce email`<br>
-      Expected: An announcement email is sent to all students. A success message is shown confirming the email was sent.
-
-   1. Test case: `announce email` with invalid email format<br>
-      Expected: Error message indicating that the email format is invalid.
+8. Help Window Management:  
+   Proper handling of minimized help windows with new instances.  
+   _Fix_: Detect and restore/minimize state on help commands
